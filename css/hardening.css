@@ -1,0 +1,206 @@
+/**
+ * css/hardening.css
+ * Hardening Final do Frontend — ArqVértice Studio (I20)
+ * Implementa:
+ * 1. Skeletons de carregamento com shimmer suave (eliminação de frozen screens e layout jumps)
+ * 2. Empty states contextuais padronizados (contexto, explicação e próxima ação)
+ * 3. Estados de erro acessíveis e informativos (sem expor internals técnicos)
+ * 4. Proteção contra transbordamento por internacionalização (i18n-safe-overflow)
+ * 5. Consistência tátil e acessibilidade em botões, cartões e modais
+ */
+
+/* ==========================================================================
+   1. SKELETON LOADERS (ELIMINAÇÃO DE LAYOUT SHIFTS E TELAS CONGELADAS)
+   ========================================================================== */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface, #1d1d1f) 0%,
+    var(--color-surface-hover, #2d2d30) 50%,
+    var(--color-surface, #1d1d1f) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+  border-radius: var(--radius-sm, 8px);
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-text {
+  height: 14px;
+  margin-bottom: var(--space-xs, 8px);
+  width: 100%;
+  border-radius: var(--radius-xs, 4px);
+}
+
+.skeleton-text.short {
+  width: 45%;
+}
+
+.skeleton-text.medium {
+  width: 70%;
+}
+
+.skeleton-card {
+  padding: var(--space-lg, 24px);
+  background: var(--color-surface, #1d1d1f);
+  border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-md, 11px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 12px);
+  min-height: 140px;
+}
+
+.skeleton-thumb {
+  width: 100%;
+  height: 160px;
+  border-radius: var(--radius-sm, 8px);
+}
+
+/* ==========================================================================
+   2. EMPTY STATES PADRONIZADOS (CONTEXTO, EXPLICAÇÃO & PRÓXIMA AÇÃO)
+   ========================================================================== */
+.arq-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-2xl, 48px) var(--space-lg, 24px);
+  background: var(--color-surface, #1d1d1f);
+  border: 1px dashed var(--color-border-medium, rgba(255, 255, 255, 0.15));
+  border-radius: var(--radius-lg, 18px);
+  margin: var(--space-lg, 24px) 0;
+  min-height: 240px;
+}
+
+.arq-empty-state .empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-sm, 12px);
+  color: var(--color-text-secondary, #86868b);
+  opacity: 0.8;
+}
+
+.arq-empty-state .empty-title {
+  font-family: var(--font-display, -apple-system, sans-serif);
+  font-size: var(--type-heading-size, 1.25rem);
+  font-weight: 600;
+  color: var(--color-text-primary, #f5f5f7);
+  margin-bottom: var(--space-xs, 8px);
+}
+
+.arq-empty-state .empty-description {
+  font-family: var(--font-sans, -apple-system, sans-serif);
+  font-size: var(--type-body-size, 0.875rem);
+  color: var(--color-text-secondary, #86868b);
+  max-width: 420px;
+  line-height: 1.5;
+  margin-bottom: var(--space-lg, 24px);
+}
+
+.arq-empty-state .empty-action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs, 8px);
+}
+
+/* ==========================================================================
+   3. ESTADOS DE ERRO CONTEXTUAIS E RECUPERÁVEIS (ERROR BANNER)
+   ========================================================================== */
+.arq-error-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md, 16px);
+  padding: var(--space-md, 16px);
+  background: rgba(255, 59, 48, 0.08);
+  border: 1px solid rgba(255, 59, 48, 0.25);
+  border-radius: var(--radius-md, 11px);
+  margin: var(--space-md, 16px) 0;
+  color: var(--color-text-primary, #f5f5f7);
+}
+
+.arq-error-banner .error-icon {
+  color: var(--color-danger, #ff3b30);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.arq-error-banner .error-content {
+  flex: 1;
+}
+
+.arq-error-banner .error-title {
+  font-weight: 600;
+  font-size: var(--type-body-sm-size, 0.8125rem);
+  color: var(--color-danger, #ff3b30);
+  margin-bottom: 4px;
+}
+
+.arq-error-banner .error-message {
+  font-size: var(--type-caption-size, 0.75rem);
+  color: var(--color-text-secondary, #86868b);
+  line-height: 1.4;
+  margin-bottom: var(--space-xs, 8px);
+}
+
+.arq-error-banner .error-recovery-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 59, 48, 0.4);
+  color: var(--color-danger, #ff3b30);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill, 9999px);
+  font-size: var(--type-caption-size, 0.75rem);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--motion-duration-fast, 140ms);
+}
+
+.arq-error-banner .error-recovery-btn:hover {
+  background: rgba(255, 59, 48, 0.15);
+  border-color: var(--color-danger, #ff3b30);
+}
+
+/* ==========================================================================
+   4. PROTEÇÃO CONTRA TRANSBORDAMENTO POR I18N (INTERNATIONALIZATION READINESS)
+   ========================================================================== */
+.i18n-safe-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.i18n-multiline-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.i18n-multiline-clamp.clamp-2 {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.i18n-multiline-clamp.clamp-3 {
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+/* ==========================================================================
+   5. RESILIÊNCIA EM DISPOSITIVOS COM MOVIMENTO REDUZIDO
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer {
+    animation: none;
+    background: var(--color-surface-hover, #2d2d30);
+  }
+}

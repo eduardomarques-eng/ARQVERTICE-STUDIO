@@ -1,0 +1,63 @@
+-- ============================================================================
+-- ARQVERTICE STUDIO — SEÇÃO 36: VIDEO TIMELINE (BLOCO G12)
+-- ============================================================================
+-- Editor visual básico de vídeo.
+-- NÃO tenta recriar Premiere, DaVinci Resolve ou After Effects.
+-- Objetivo: timeline simples para montagem do projeto.
+-- ============================================================================
+--
+-- ESTRUTURA DE FAIXAS (TRACKS):
+-- ┌─────────────────────────────────────────────────────────┐
+-- │  VIDEO       ──  Clipes de vídeo / renders / imagens    │
+-- │  AUDIO       ──  Trilhas sonoras / efeitos sonoros      │
+-- │  VOICE       ──  Narração / locução / voiceover         │
+-- │  TEXT        ──  Legendas / overlays de texto            │
+-- │  TRANSITIONS ──  Transições entre clipes de vídeo       │
+-- ╰─────────────────────────────────────────────────────────╯
+--
+-- TIMELINE CONCEITUAL:
+--
+--   00:00
+--   ────────────────────────────────────
+--   Scene 01   Scene 02   Scene 03
+--   ────────────────────────────────────
+--
+-- REGRAS MANDATÓRIAS:
+-- • Toda edição é NÃO DESTRUTIVA (non-destructive editing)
+-- • Nunca destruir assets originais
+-- • Clipes são referências; cortar/mover/duplicar nunca altera o fonte
+-- • Preservar metadados de resolução, FPS e proporção
+-- ============================================================================
+
+-- Tabela: video_timelines
+-- Representa a timeline de um projeto de vídeo
+-- Campos canônicos: id, video_project_id, title, total_duration_seconds,
+--   fps, resolution_width, resolution_height, aspect_ratio, is_locked,
+--   version, notes, created_by, created_at, updated_at
+--
+-- Valores padrão: fps=30, resolution=1920x1080, aspect_ratio='16:9'
+
+-- Tabela: video_timeline_clips
+-- Representa um clipe posicionado em uma faixa da timeline
+-- Campos canônicos: id, timeline_id, video_project_id, track, track_index,
+--   position_seconds, duration_seconds, in_point_seconds, out_point_seconds,
+--   source_type, source_id, source_label, asset_url, content,
+--   transition_in, transition_out, transition_duration_seconds,
+--   is_muted, volume, opacity, order_index, metadata,
+--   created_by, created_at, updated_at
+--
+-- Tracks possíveis: VIDEO, AUDIO, VOICE, TEXT, TRANSITIONS
+--
+-- OPERAÇÕES PERMITIDAS (NÃO DESTRUTIVAS):
+-- • mover     →  alterar position_seconds / order_index
+-- • cortar    →  criar dois clipes a partir do ponto de corte (in/out points)
+-- • duplicar  →  copiar clipe com novo ID, mesma referência ao source
+-- • excluir   →  remover clipe da timeline (NÃO remove o asset original)
+-- • ajustar duração →  alterar duration_seconds / out_point_seconds
+-- • reorganizar     →  reordenar order_index dentro de uma faixa
+
+-- METADADOS DE VISUALIZAÇÃO:
+-- • duração total  →  somada a partir de todos os clipes na faixa VIDEO
+-- • FPS            →  definido na timeline, informativo para exportação
+-- • resolução      →  resolução de saída (informativa)
+-- • proporção      →  aspect ratio de saída (informativa)

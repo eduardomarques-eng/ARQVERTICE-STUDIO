@@ -1,0 +1,48 @@
+# ==============================================================================
+# ARQVERTICE STUDIO — .dockerignore
+# ==============================================================================
+
+# Dependências locais
+node_modules/
+.pnpm-store/
+npm-debug.log*
+
+# Git & IDEs
+.git/
+.gitignore
+.agents/
+.playwright-mcp/
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Documentação pesada & Referências não necessárias na imagem
+00_CONTEXTO/
+01_PROMPTS/
+99_REFERENCIAS/
+docs/
+artifacts/
+
+# Testes automatizados (executados em CI/CD)
+tests/
+
+# Arquivos de ambiente e segredos locais
+.env
+.env.local
+.env.development
+.env.development.local
+.env.staging.local
+.env.production.local
+*.pem
+*.key
+*.pfx
+*.cert
+*.crt
+
+# Arquivos de banco locais temporários
+database/*.db
+database/*.sqlite
+database/*.sqlite3
+storage/temp/
+storage/uploads/

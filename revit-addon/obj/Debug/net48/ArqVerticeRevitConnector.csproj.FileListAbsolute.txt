@@ -1,0 +1,9 @@
+C:\Users\erick\ARQVERTICE-STUDIO\revit-addon\obj\Debug\net48\ArqVerticeRevitConnector.csproj.AssemblyReference.cache
+C:\Users\erick\ARQVERTICE-STUDIO\revit-addon\obj\Debug\net48\src\DockablePane\ArqVerticePane.baml
+C:\Users\erick\ARQVERTICE-STUDIO\revit-addon\obj\Debug\net48\src\DockablePane\ArqVerticePane.g.cs
+C:\Users\erick\ARQVERTICE-STUDIO\revit-addon\obj\Debug\net48\ArqVerticeRevitConnector_MarkupCompile.cache
+C:\Users\erick\ARQVERTICE-STUDIO\revit-addon\obj\Debug\net48\ArqVerticeRevitConnector.g.resources
+C:\Users\erick\ARQVERTICE-STUDIO\revit-addon\obj\Debug\net48\ArqVerticeRevitConnector.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\erick\ARQVERTICE-STUDIO\revit-addon\obj\Debug\net48\ArqVerticeRevitConnector.AssemblyInfoInputs.cache
+C:\Users\erick\ARQVERTICE-STUDIO\revit-addon\obj\Debug\net48\ArqVerticeRevitConnector.AssemblyInfo.cs
+C:\Users\erick\ARQVERTICE-STUDIO\revit-addon\obj\Debug\net48\ArqVerticeRevitConnector.csproj.CoreCompileInputs.cache

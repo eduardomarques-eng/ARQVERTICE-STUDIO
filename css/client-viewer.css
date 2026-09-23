@@ -1,0 +1,907 @@
+/*
+ * ArqVértice Studio — J33 Client 3D Viewer Styles (Sketchfab-Grade UI)
+ * Design System Apple/Sketchfab: Glassmorphism, Edge-to-Edge 3D, Minimal Floating HUD.
+ */
+
+:root {
+  --viewer-bg: #0b0d11;
+  --viewer-glass: rgba(18, 22, 31, 0.78);
+  --viewer-glass-hover: rgba(28, 34, 48, 0.92);
+  --viewer-glass-border: rgba(255, 255, 255, 0.12);
+  --viewer-glass-glow: rgba(41, 151, 255, 0.25);
+  --viewer-accent: #2997ff;
+  --viewer-accent-glow: #0071e3;
+  --viewer-gold: #f5a623;
+  --viewer-green: #34c759;
+  --viewer-red: #ff3b30;
+  --viewer-text-primary: #f5f5f7;
+  --viewer-text-secondary: #a1a1a6;
+  --viewer-text-muted: #6e6e73;
+  --viewer-radius-sm: 8px;
+  --viewer-radius-md: 14px;
+  --viewer-radius-lg: 20px;
+  --viewer-radius-pill: 9999px;
+  --viewer-shadow-float: 0 12px 36px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.35);
+  --viewer-blur: blur(20px) saturate(180%);
+  --viewer-font: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --viewer-font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--viewer-bg);
+  font-family: var(--viewer-font);
+  color: var(--viewer-text-primary);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+/* Container do Visualizador 3D Edge-to-Edge */
+#arq-client-viewer-app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#viewer-canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+#viewer-3d-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  outline: none;
+  cursor: grab;
+}
+
+#viewer-3d-canvas:active {
+  cursor: grabbing;
+}
+
+/* Vinheta de Fundo Sutil */
+.viewer-vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(circle at center, transparent 45%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+/* Barra Superior Flutuante (Header) */
+.viewer-header {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.viewer-header > * {
+  pointer-events: auto;
+}
+
+.viewer-brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px 8px 10px;
+  background: var(--viewer-glass);
+  backdrop-filter: var(--viewer-blur);
+  -webkit-backdrop-filter: var(--viewer-blur);
+  border: 1px solid var(--viewer-glass-border);
+  border-radius: var(--viewer-radius-pill);
+  box-shadow: var(--viewer-shadow-float);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.viewer-brand-badge:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.viewer-logo-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.viewer-project-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.viewer-project-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--viewer-text-primary);
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.viewer-project-sub {
+  font-size: 0.68rem;
+  color: var(--viewer-text-secondary);
+  font-weight: 500;
+}
+
+.viewer-badge-tag {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(41, 151, 255, 0.15);
+  color: var(--viewer-accent);
+  border: 1px solid rgba(41, 151, 255, 0.3);
+}
+
+/* Ações Rápidas do Header */
+.viewer-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.viewer-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--viewer-glass);
+  backdrop-filter: var(--viewer-blur);
+  -webkit-backdrop-filter: var(--viewer-blur);
+  border: 1px solid var(--viewer-glass-border);
+  color: var(--viewer-text-primary);
+  cursor: pointer;
+  box-shadow: var(--viewer-shadow-float);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.viewer-icon-btn:hover {
+  background: var(--viewer-glass-hover);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+.viewer-icon-btn:active {
+  transform: scale(0.94);
+}
+
+.viewer-icon-btn.active {
+  background: var(--viewer-accent);
+  color: #fff;
+  border-color: var(--viewer-accent-glow);
+  box-shadow: 0 0 16px var(--viewer-glass-glow);
+}
+
+.viewer-icon-btn .btn-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: var(--viewer-accent);
+  color: #fff;
+  font-size: 0.55rem;
+  font-weight: 800;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--viewer-bg);
+}
+
+/* Barra Inferior Principal (Sketchfab-Style Dock) */
+.viewer-dock-wrapper {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+  padding: 0 16px;
+}
+
+.viewer-dock {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--viewer-glass);
+  backdrop-filter: var(--viewer-blur);
+  -webkit-backdrop-filter: var(--viewer-blur);
+  border: 1px solid var(--viewer-glass-border);
+  border-radius: var(--viewer-radius-pill);
+  box-shadow: var(--viewer-shadow-float);
+  max-width: 95vw;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.viewer-dock::-webkit-scrollbar {
+  display: none;
+}
+
+.viewer-dock-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+.viewer-dock-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: var(--viewer-radius-pill);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--viewer-text-secondary);
+  font-family: var(--viewer-font);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.viewer-dock-btn i {
+  width: 16px;
+  height: 16px;
+}
+
+.viewer-dock-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--viewer-text-primary);
+}
+
+.viewer-dock-btn.active {
+  background: rgba(41, 151, 255, 0.18);
+  color: var(--viewer-accent);
+  border-color: rgba(41, 151, 255, 0.35);
+}
+
+/* Preset de Câmeras Flutuante (Lateral Esquerda) */
+.viewer-views-bar {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--viewer-glass);
+  backdrop-filter: var(--viewer-blur);
+  -webkit-backdrop-filter: var(--viewer-blur);
+  border: 1px solid var(--viewer-glass-border);
+  border-radius: var(--viewer-radius-md);
+  padding: 8px 6px;
+  box-shadow: var(--viewer-shadow-float);
+  z-index: 10;
+}
+
+.viewer-view-pill {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--viewer-text-secondary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.viewer-view-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--viewer-text-primary);
+}
+
+.viewer-view-pill.active {
+  background: var(--viewer-accent);
+  color: #fff;
+  box-shadow: 0 0 12px var(--viewer-glass-glow);
+}
+
+/* Popover / Menus Flutuantes */
+.viewer-popover {
+  position: absolute;
+  bottom: 80px;
+  background: var(--viewer-glass);
+  backdrop-filter: var(--viewer-blur);
+  -webkit-backdrop-filter: var(--viewer-blur);
+  border: 1px solid var(--viewer-glass-border);
+  border-radius: var(--viewer-radius-md);
+  padding: 12px;
+  box-shadow: var(--viewer-shadow-float);
+  z-index: 20;
+  min-width: 240px;
+  display: none;
+  animation: viewerFadeSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.viewer-popover.open {
+  display: block;
+}
+
+.viewer-popover-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--viewer-text-muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.viewer-popover-options {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.viewer-popover-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: var(--viewer-radius-sm);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--viewer-text-primary);
+  font-family: var(--viewer-font);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.viewer-popover-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.viewer-popover-item.active {
+  background: rgba(41, 151, 255, 0.15);
+  border-color: rgba(41, 151, 255, 0.35);
+  color: var(--viewer-accent);
+  font-weight: 600;
+}
+
+.viewer-popover-item .item-sub {
+  font-size: 0.65rem;
+  color: var(--viewer-text-secondary);
+  display: block;
+}
+
+/* Painel Lateral de Hotspots e Informações */
+.viewer-sidebar-panel {
+  position: absolute;
+  top: 70px;
+  right: 16px;
+  width: 320px;
+  max-height: calc(100vh - 160px);
+  background: var(--viewer-glass);
+  backdrop-filter: var(--viewer-blur);
+  -webkit-backdrop-filter: var(--viewer-blur);
+  border: 1px solid var(--viewer-glass-border);
+  border-radius: var(--viewer-radius-lg);
+  padding: 16px;
+  box-shadow: var(--viewer-shadow-float);
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  transform: translateX(360px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.viewer-sidebar-panel.open {
+  transform: translateX(0);
+}
+
+.viewer-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.viewer-panel-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--viewer-text-primary);
+}
+
+.viewer-panel-close {
+  background: transparent;
+  border: none;
+  color: var(--viewer-text-secondary);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.viewer-panel-close:hover {
+  color: #fff;
+}
+
+/* Cards de Hotspots */
+.viewer-hotspot-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--viewer-radius-md);
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.viewer-hotspot-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(41, 151, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.viewer-hotspot-card.selected {
+  border-color: var(--viewer-accent);
+  background: rgba(41, 151, 255, 0.12);
+}
+
+.viewer-hotspot-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.viewer-hotspot-desc {
+  font-size: 0.72rem;
+  color: var(--viewer-text-secondary);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.viewer-hotspot-specs {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.viewer-spec-chip {
+  font-size: 0.62rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--viewer-text-primary);
+}
+
+/* Hotspots 3D em Canvas (Markers Flutuantes) */
+.viewer-3d-hotspot-marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(41, 151, 255, 0.85);
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(41, 151, 255, 0.8);
+  pointer-events: auto;
+  z-index: 5;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s;
+  animation: pulseHotspot 2s infinite;
+}
+
+.viewer-3d-hotspot-marker:hover {
+  transform: translate(-50%, -50%) scale(1.25);
+  background: var(--viewer-accent);
+}
+
+@keyframes pulseHotspot {
+  0% { box-shadow: 0 0 0 0 rgba(41, 151, 255, 0.7); }
+  70% { box-shadow: 0 0 0 12px rgba(41, 151, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(41, 151, 255, 0); }
+}
+
+/* HUD da Trena Virtual 3D */
+.viewer-measure-hud {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--viewer-glass);
+  backdrop-filter: var(--viewer-blur);
+  -webkit-backdrop-filter: var(--viewer-blur);
+  border: 1px solid rgba(245, 166, 35, 0.4);
+  border-radius: var(--viewer-radius-pill);
+  padding: 8px 18px;
+  display: none;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--viewer-shadow-float);
+  z-index: 15;
+  animation: viewerFadeSlideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.viewer-measure-hud.active {
+  display: flex;
+}
+
+.viewer-measure-value {
+  font-family: var(--viewer-font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--viewer-gold);
+}
+
+.viewer-measure-hint {
+  font-size: 0.72rem;
+  color: var(--viewer-text-secondary);
+}
+
+.viewer-measure-clear-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* HUD de Telemetria e Diagnóstico */
+.viewer-telemetry-hud {
+  position: absolute;
+  bottom: 80px;
+  right: 16px;
+  background: var(--viewer-glass);
+  backdrop-filter: var(--viewer-blur);
+  -webkit-backdrop-filter: var(--viewer-blur);
+  border: 1px solid var(--viewer-glass-border);
+  border-radius: var(--viewer-radius-md);
+  padding: 10px 14px;
+  font-family: var(--viewer-font-mono);
+  font-size: 0.68rem;
+  color: var(--viewer-text-secondary);
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 10;
+  box-shadow: var(--viewer-shadow-float);
+}
+
+.viewer-telemetry-hud.open {
+  display: flex;
+}
+
+.telemetry-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.telemetry-val {
+  font-weight: 700;
+  color: var(--viewer-text-primary);
+}
+
+.telemetry-val.fps-high { color: var(--viewer-green); }
+.telemetry-val.fps-mid { color: var(--viewer-gold); }
+.telemetry-val.fps-low { color: var(--viewer-red); }
+
+/* Modal de Compartilhamento & Segurança */
+.viewer-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 50;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.viewer-modal-backdrop.open {
+  display: flex;
+  animation: viewerFadeIn 0.2s ease;
+}
+
+.viewer-modal-card {
+  background: #14171f;
+  border: 1px solid var(--viewer-glass-border);
+  border-radius: var(--viewer-radius-lg);
+  padding: 24px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+}
+
+.viewer-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.viewer-modal-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.viewer-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.viewer-text-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--viewer-radius-sm);
+  padding: 10px 12px;
+  color: #fff;
+  font-family: var(--viewer-font-mono);
+  font-size: 0.75rem;
+  outline: none;
+}
+
+.viewer-btn-primary {
+  background: var(--viewer-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--viewer-radius-sm);
+  padding: 10px 16px;
+  font-family: var(--viewer-font);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s ease;
+}
+
+.viewer-btn-primary:hover {
+  background: var(--viewer-accent-glow);
+}
+
+.viewer-security-notice {
+  font-size: 0.7rem;
+  color: var(--viewer-text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: var(--viewer-radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Tela de Carregamento Progressivo */
+.viewer-loading-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #090a0d;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.viewer-loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.viewer-loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  max-width: 320px;
+  text-align: center;
+}
+
+.viewer-loading-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #111;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 24px rgba(41, 151, 255, 0.3);
+  animation: pulseLogo 2s infinite ease-in-out;
+}
+
+@keyframes pulseLogo {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+.viewer-loading-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.viewer-loading-sub {
+  font-size: 0.75rem;
+  color: var(--viewer-text-secondary);
+}
+
+.viewer-progress-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--viewer-radius-pill);
+  overflow: hidden;
+  position: relative;
+}
+
+.viewer-progress-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--viewer-accent), #64d2ff);
+  border-radius: var(--viewer-radius-pill);
+  transition: width 0.2s ease;
+}
+
+/* Toast de Notificação */
+.viewer-toast {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: var(--viewer-glass-hover);
+  backdrop-filter: var(--viewer-blur);
+  -webkit-backdrop-filter: var(--viewer-blur);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: var(--viewer-radius-pill);
+  font-size: 0.78rem;
+  font-weight: 600;
+  box-shadow: var(--viewer-shadow-float);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.viewer-toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Animations */
+@keyframes viewerFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes viewerFadeSlideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes viewerFadeSlideDown {
+  from { opacity: 0; transform: translate(-50%, -10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* Responsividade Mobile e Tablet */
+@media (max-width: 768px) {
+  .viewer-header {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+  }
+  .viewer-dock-wrapper {
+    bottom: 12px;
+    padding: 0 8px;
+  }
+  .viewer-dock-btn span {
+    display: none;
+  }
+  .viewer-dock-btn {
+    padding: 8px 10px;
+  }
+  .viewer-views-bar {
+    left: 10px;
+    padding: 4px;
+    gap: 4px;
+  }
+  .viewer-view-pill {
+    width: 30px;
+    height: 30px;
+    font-size: 0.65rem;
+  }
+  .viewer-sidebar-panel {
+    width: calc(100vw - 20px);
+    right: 10px;
+    top: 60px;
+    max-height: calc(100vh - 140px);
+  }
+  .viewer-project-sub {
+    display: none;
+  }
+}

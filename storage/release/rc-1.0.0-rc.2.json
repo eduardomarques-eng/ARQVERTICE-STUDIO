@@ -1,0 +1,55 @@
+{
+  "releaseCandidate": "1.0.0-rc.2",
+  "baseVersion": "1.0.0",
+  "generatedAt": "2026-09-23T22:25:12.636Z",
+  "status": "READY_FOR_STAGING_AND_PROD",
+  "qualityGates": {
+    "lintAndTypecheck": "PASSED",
+    "masterTestSuite": "88_SUITES_PASSED",
+    "securityHardening": "COMPLIANT_OWASP",
+    "performanceBudgets": "COMPLIANT_CORE_WEB_VITALS",
+    "deployAndRollback": "TESTED_BLUE_GREEN"
+  },
+  "artifacts": [
+    {
+      "file": "server.js",
+      "sha256": "7bd0184dd4475c4e"
+    },
+    {
+      "file": "index.html",
+      "sha256": "55350fb58c0abfe1"
+    },
+    {
+      "file": "portal.html",
+      "sha256": "db09a4c7cf140a98"
+    },
+    {
+      "file": "viewer.html",
+      "sha256": "2f24430cf1de3698"
+    },
+    {
+      "file": "styles.css",
+      "sha256": "f9c636744eff678a"
+    },
+    {
+      "file": "Dockerfile",
+      "sha256": "ac330551039af2c0"
+    },
+    {
+      "file": "docker-compose.prod.yml",
+      "sha256": "379d82ca51c29a59"
+    },
+    {
+      "file": "Caddyfile",
+      "sha256": "3b9541ac271b170c"
+    },
+    {
+      "file": ".github/workflows/ci.yml",
+      "sha256": "f35c10b1f02fbf4d"
+    },
+    {
+      "file": ".github/workflows/cd-release.yml",
+      "sha256": "4ad91719efbf2626"
+    }
+  ]
+}

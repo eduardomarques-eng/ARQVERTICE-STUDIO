@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>ArqVertice Revit Connector</Name>
+    <Assembly>ArqVerticeRevitConnector.dll</Assembly>
+    <FullClassName>ArqVertice.Revit.App</FullClassName>
+    <ClientId>A9C3E1B2-7489-4D35-985E-37F159048E21</ClientId>
+    <VendorId>ARQV</VendorId>
+    <VendorDescription>ArqVértice Studio - Intelligent Multimodal Design Engine, https://arqvertice.com</VendorDescription>
+  </AddIn>
+  <AddIn Type="Command">
+    <Name>Abrir ArqVértice Studio</Name>
+    <Assembly>ArqVerticeRevitConnector.dll</Assembly>
+    <FullClassName>ArqVertice.Revit.Command</FullClassName>
+    <ClientId>B8D4E2C3-8590-5E46-A96F-48026A159F32</ClientId>
+    <VendorId>ARQV</VendorId>
+    <VendorDescription>ArqVértice Studio - Painel Conectado</VendorDescription>
+  </AddIn>
+</RevitAddIns>

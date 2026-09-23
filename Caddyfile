@@ -1,0 +1,94 @@
+# ==============================================================================
+# ARQVERTICE STUDIO — CADDY REVERSE PROXY & GATEWAY CONFIGURATION (OWASP & CACHE)
+# ==============================================================================
+
+{
+    email admin@arqvertice.com
+    admin off
+    auto_https off # Gerenciado por ingress ou Let's Encrypt automático configurável
+}
+
+:80, :443 {
+    # 1. Compressão de Alta Performance (Zstandard e Gzip)
+    encode zstd gzip
+
+    # 2. Cabeçalhos de Segurança OWASP Compliant
+    header {
+        # Content-Security-Policy compatível com WebWorkers, WebGPU, WebAssembly e CDNs
+        Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://unpkg.com https://cdnjs.cloudflare.com blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://images.unsplash.com https://*.arqvertice.com; media-src 'self' blob:; connect-src 'self' https://unpkg.com https://api.omniroute.ai http://127.0.0.1:11434 http://127.0.0.1:48080 wss:; frame-ancestors 'self' https://*.arqvertice.com;"
+        
+        # Prevenção de MIME-Sniffing
+        X-Content-Type-Options "nosniff"
+        
+        # Prevenção de Clickjacking
+        X-Frame-Options "SAMEORIGIN"
+        
+        # HSTS com preloading (2 anos)
+        Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+        
+        # Referrer Policy Estrito
+        Referrer-Policy "strict-origin-when-cross-origin"
+        
+        # Permissões de Recursos do Navegador
+        Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+        
+        # Ocultar assinatura do servidor
+        -Server
+    }
+
+    # Bloqueio de métodos HTTP não autorizados (K10)
+    @disallowedMethods {
+        method TRACE TRACK CONNECT
+    }
+    respond @disallowedMethods "Method Not Allowed" 405
+
+    # 3. Políticas Estritas de Cache por Tipo de Recurso
+
+    # A. Aplicação Web / HTML Dinâmico (Sem cache em disco para evitar versões obsoletas)
+    @htmlPages {
+        path / /index.html /portal /portal.html /viewer /viewer.html /3d
+    }
+    header @htmlPages {
+        Cache-Control "no-cache, no-store, must-revalidate"
+        Pragma "no-cache"
+        Expires "0"
+    }
+
+    # B. Manifestos de Projeto e Metadados da API (Cache curto com revalidação em background)
+    @manifestsAndAPI {
+        path /api/projects/*/manifest /project.manifest.json /api/v1/*
+    }
+    header @manifestsAndAPI {
+        Cache-Control "public, max-age=60, stale-while-revalidate=300"
+        Access-Control-Allow-Origin "*"
+    }
+
+    # C. Assets 3D Imutáveis e Modelos Otimizados (1 ano de cache imutável)
+    @immutableAssets {
+        path *.glb *.gltf *.bin *.ktx2 *.sog *.spz *.ksplat *.splat /storage/web/* /assets/models/*
+    }
+    header @immutableAssets {
+        Cache-Control "public, max-age=31536000, immutable"
+        Access-Control-Allow-Origin "*"
+    }
+
+    # D. Assets Estáticos da Aplicação (CSS, JS, Fontes, Imagens)
+    @staticAssets {
+        path *.css *.js *.woff2 *.woff *.ttf *.png *.webp *.jpg *.svg *.ico
+    }
+    header @staticAssets {
+        Cache-Control "public, max-age=86400, stale-while-revalidate=604800"
+    }
+
+    # 4. Proxy Reverso para o Container Principal (arqvertice-web)
+    reverse_proxy arqvertice-web:3000 {
+        header_up Host {host}
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+
+        # Healthcheck e resiliência
+        fail_duration 10s
+        max_fails 3
+    }
+}

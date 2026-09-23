@@ -1,0 +1,179 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "project": "ARQVERTICE STUDIO",
+  "auditDate": "2026-09-21T12:50:00-03:00",
+  "auditor": "Antigravity Agentic AI",
+  "status": "Auditoria Concluída - Código Original 100% Preservado",
+  "sources": {
+    "primaryRepository": "https://github.com/eduardomarques-eng/cronograma-residencia-praia.git",
+    "productionDeploy": "https://cronograma-residencia-praia-mlym.vercel.app/",
+    "localCronogramaPath": "C:\\Users\\erick\\cronograma-residencia-praia",
+    "localBriefingPath": "C:\\Users\\erick\\briefing-arqvertice",
+    "localSitePath": "C:\\Users\\erick\\arqvertice-site"
+  },
+  "frontend": {
+    "architecture": "Vanilla Web (HTML5, CSS3, ES6+)",
+    "buildTool": null,
+    "bundler": null,
+    "files": [
+      { "path": "index.html", "sizeBytes": 58640, "lines": 1027, "role": "Estrutura, modais, cabeçalho e templates de impressão" },
+      { "path": "styles.css", "sizeBytes": 70293, "lines": 1637, "role": "Design tokens, estilos do Kanban, tabela e @media print" },
+      { "path": "app.js", "sizeBytes": 58392, "lines": 1649, "role": "Monolito de controle, CRUD de tarefas, datagrid e gerador de PDF" },
+      { "path": "painel-cliente.js", "sizeBytes": 17916, "lines": 428, "role": "Faixa de fases 'Estamos Aqui', equipe técnica e parecer dinâmico" },
+      { "path": "api-cliente.js", "sizeBytes": 7826, "lines": 246, "role": "Ponte HTTP, failover nuvem/local e autenticação por chave" }
+    ],
+    "stateManagement": {
+      "type": "In-Memory Global Object (AppState) + LocalStorage Cache",
+      "storageKeys": {
+        "tasks": "cronograma_residencia_praia_tasks_v1",
+        "theme": "cronograma_residencia_praia_theme_v1",
+        "projectInfo": "cronograma_residencia_praia_project_info_v1",
+        "adminKey": "cronograma_chave_admin_v1"
+      },
+      "reactivity": "Imperativa destrutiva (renderApp recria nós do DOM via innerHTML)"
+    },
+    "components": [
+      { "name": "MasterHeader", "type": "HTML/CSS estático com hooks dinâmicos", "status": "Preservar identidade" },
+      { "name": "ProjectDossier", "type": "Grid de especificações da obra", "status": "Reestruturar para multi-obra" },
+      { "name": "PhaseStrip", "type": "Faixa de 5 fases com algoritmo 'Estamos Aqui'", "status": "Preservar lógica" },
+      { "name": "TeamRoster", "type": "Cards de carga de trabalho dos 3 projetistas", "status": "Reestruturar para dados dinâmicos" },
+      { "name": "KanbanBoard", "type": "Quadro ágil agrupado por disciplina com HTML5 DnD", "status": "Reestruturar com @dnd-kit" },
+      { "name": "DataGrid", "type": "Tabela com edição in-line de % e data", "status": "Melhorar com debounce" },
+      { "name": "ExecutiveReportModal", "type": "Documento A4 diagramado com html2pdf.js", "status": "Reestruturar motor de geração" }
+    ],
+    "externalLibrariesCDN": [
+      { "name": "Lucide Icons", "url": "https://unpkg.com/lucide@latest", "risk": "Alto (versão latest sem lock)" },
+      { "name": "html2pdf.js", "url": "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js", "risk": "Médio (quebra em layout moderno)" },
+      { "name": "Google Fonts (Montserrat, JetBrains Mono)", "url": "https://fonts.googleapis.com", "risk": "Baixo" }
+    ]
+  },
+  "backend": {
+    "runtime": "Node.js (>=20) CommonJS",
+    "architecture": "Vercel Serverless Functions",
+    "files": [
+      { "path": "api/_db.js", "role": "Pool pg, auth por constant-time header, conversores ISO/BR" },
+      { "path": "api/status.js", "role": "Diagnóstico de conectividade, schema aplicado e contagem de etapas" },
+      { "path": "api/projeto.js", "role": "GET público e PUT autenticado para a ficha da obra" },
+      { "path": "api/tarefas.js", "role": "CRUD completo de tarefas com validação estrita de dados" }
+    ],
+    "authentication": {
+      "type": "Guarda por chave estática de administrador no cabeçalho HTTP",
+      "header": "x-chave-admin",
+      "envVariable": "ADMIN_KEY",
+      "algorithm": "Constant-time string comparison (mitiga timing attacks)",
+      "limitations": "Sem usuários individuais, sem JWT, sem RBAC, leitura 100% pública"
+    }
+  },
+  "database": {
+    "engine": "PostgreSQL",
+    "managedProvidersTested": ["Neon", "Supabase", "AWS RDS"],
+    "schemaScript": "database/schema.sql",
+    "isIdempotent": true,
+    "tables": [
+      {
+        "name": "projeto",
+        "primaryKey": "id (SMALLINT)",
+        "constraints": ["CHECK (id = 1)"],
+        "criticalLimitation": "Singleton de obra única (impede cadastrar mais de um projeto)",
+        "columns": [
+          "id", "nome_obra", "cliente", "localizacao", "lote_quadra", "zona",
+          "area_construida", "area_terreno", "tipologia", "data_inicio",
+          "previsao_conclusao", "prazo_total", "empresa", "atualizado_em"
+        ]
+      },
+      {
+        "name": "tarefas",
+        "primaryKey": "id (UUID)",
+        "foreignKeys": [],
+        "criticalLimitation": "Desacoplada de projeto (sem coluna projeto_id)",
+        "columns": [
+          "id", "descricao_etapa", "disciplina_projeto", "projetista",
+          "data_conclusao", "porcentagem", "ordem", "status", "criado_em", "atualizado_em"
+        ],
+        "generatedColumns": {
+          "status": "CASE WHEN porcentagem = 0 THEN 'Não Iniciado' WHEN porcentagem = 100 THEN 'Finalizado' ELSE 'Em Andamento' END STORED"
+        },
+        "indices": [
+          "idx_tarefas_disciplina",
+          "idx_tarefas_projetista",
+          "idx_tarefas_data",
+          "idx_tarefas_ordem"
+        ]
+      }
+    ],
+    "triggers": [
+      { "name": "trg_tarefas_atualizado", "function": "toca_atualizado_em()", "event": "BEFORE UPDATE ON tarefas" },
+      { "name": "trg_projeto_atualizado", "function": "toca_atualizado_em()", "event": "BEFORE UPDATE ON projeto" }
+    ],
+    "seedData": {
+      "projectName": "Residência de Praia",
+      "client": "Pedro",
+      "totalTasks": 14,
+      "disciplines": ["Arquitetura", "3D", "Estrutura", "Complementares", "Obras"]
+    }
+  },
+  "apis": [
+    { "endpoint": "/api/status", "method": "GET", "authRequired": false, "description": "Diagnóstico de infraestrutura e conexão com Postgres" },
+    { "endpoint": "/api/projeto", "method": "GET", "authRequired": false, "description": "Lê ficha técnica da obra 1" },
+    { "endpoint": "/api/projeto", "method": "PUT", "authRequired": true, "description": "Atualiza ficha técnica da obra 1" },
+    { "endpoint": "/api/tarefas", "method": "GET", "authRequired": false, "description": "Lista todas as etapas em ordem de execução" },
+    { "endpoint": "/api/tarefas", "method": "POST", "authRequired": true, "description": "Cria nova etapa no cronograma" },
+    { "endpoint": "/api/tarefas?id={UUID}", "method": "PUT", "authRequired": true, "description": "Atualiza campos parciais da etapa" },
+    { "endpoint": "/api/tarefas?id={UUID}", "method": "DELETE", "authRequired": true, "description": "Remove etapa pelo identificador UUID" }
+  ],
+  "funcionalidades": {
+    "fichaTecnicaObra": { "status": "Operacional", "destino": "REESTRUTURAR" },
+    "indicadorOrigemDados": { "status": "Operacional", "destino": "SUBSTITUIR" },
+    "painelFasesEstamosAqui": { "status": "Operacional", "destino": "PRESERVAR" },
+    "resumoExecutivoNatural": { "status": "Operacional", "destino": "PRESERVAR" },
+    "equipeTecnicaCarga": { "status": "Operacional", "destino": "REESTRUTURAR" },
+    "quadroKanbanDisciplinar": { "status": "Operacional", "destino": "REESTRUTURAR" },
+    "tabelaControleDatagrid": { "status": "Operacional", "destino": "MELHORAR" },
+    "filtragemMultidimensional": { "status": "Operacional", "destino": "PRESERVAR" },
+    "crudTarefas": { "status": "Operacional", "destino": "MELHORAR" },
+    "relatorioExecutivoPDF": { "status": "Operacional", "destino": "REESTRUTURAR" },
+    "briefingGuiado32Perguntas": { "status": "Operacional isolado", "destino": "INTEGRAR" },
+    "alternadorTemaClaroEscuro": { "status": "Operacional", "destino": "PRESERVAR" },
+    "exportacaoJSON": { "status": "Operacional", "destino": "MELHORAR" }
+  },
+  "dependencies": {
+    "npm": {
+      "pg": "^8.13.1"
+    },
+    "cdn": {
+      "lucide": "latest",
+      "html2pdf.js": "0.10.1",
+      "googleFonts": ["Montserrat", "JetBrains Mono"]
+    }
+  },
+  "deploy": {
+    "platform": "Vercel",
+    "configFile": "vercel.json",
+    "maxDurationSeconds": 15,
+    "securityHeaders": {
+      "X-Content-Type-Options": "nosniff",
+      "Referrer-Policy": "strict-origin-when-cross-origin"
+    },
+    "cacheHeaders": {
+      "api": "no-store, max-age=0",
+      "assets": "public, max-age=0, must-revalidate"
+    },
+    "requiredEnvVars": ["DATABASE_URL", "ADMIN_KEY"]
+  },
+  "riscos": [
+    { "id": "SEC-01", "name": "Chave admin compartilhada no localStorage", "severity": "Crítica" },
+    { "id": "SEC-02", "name": "Endpoints de leitura sem proteção de rota", "severity": "Média" },
+    { "id": "ESC-01", "name": "Bloqueio CHECK (id=1) impede múltiplos projetos", "severity": "Crítica" },
+    { "id": "CONC-01", "name": "Concorrência cega de escrita entre colaboradores", "severity": "Alta" },
+    { "id": "DEP-01", "name": "Dependência de CDN unpkg @latest para ícones", "severity": "Alta" },
+    { "id": "DEP-02", "name": "Esgotamento de pool em conexões serverless sem pooler", "severity": "Alta" }
+  ],
+  "recomendacoes": {
+    "frameworkRecomendado": "Next.js (App Router) + React + TypeScript + Tailwind CSS",
+    "ormRecomendado": "Drizzle ORM ou Prisma sobre PostgreSQL",
+    "autenticacaoRecomendada": "Auth.js ou Supabase Auth com RBAC (Admin, Equipe, Cliente)",
+    "armazenamentoRecomendado": "Vercel Blob ou AWS S3 / Cloudflare R2 com URLs pré-assinadas",
+    "iaRecomendada": "Google Gemini API via Server Actions (Memória Contextual Multicamada)",
+    "estrategiaMigracao": "Evolução modular em fases, preservando paridade estrita com o sistema legado"
+  }
+}

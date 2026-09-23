@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "1.0.0-arqvertice-manifest",
+  "projectId": "prj-praia-01",
+  "projectCode": "PRJ-PRAIA-01",
+  "projectName": "Residência de Praia",
+  "generatedAt": "2026-09-23T17:55:00.000Z",
+  "version": 1,
+  "scenes": [
+    {
+      "id": "scn-living",
+      "name": "Living & Estar Integrado",
+      "levelId": "lvl-01",
+      "defaultCameraId": "cam-living-01"
+    },
+    {
+      "id": "scn-gourmet",
+      "name": "Deck Gourmet & Lounge",
+      "levelId": "lvl-01",
+      "defaultCameraId": "cam-gourmet-01"
+    },
+    {
+      "id": "scn-suite",
+      "name": "Suíte Master Panorâmica",
+      "levelId": "lvl-02",
+      "defaultCameraId": "cam-suite-01"
+    }
+  ],
+  "assets": [
+    {
+      "id": "SOFA-001",
+      "name": "Sofá Modular 4 Lugares",
+      "category": "Furniture",
+      "lod0": "storage/web/sofa_lod0.glb",
+      "lod1": "storage/web/sofa_lod1.glb",
+      "lod2": "storage/web/sofa_lod2.glb"
+    },
+    {
+      "id": "DECK-001",
+      "name": "Deck Madeira Cumaru",
+      "category": "Structure",
+      "lod0": "storage/web/deck_lod0.glb"
+    },
+    {
+      "id": "WIN-FAC-01",
+      "name": "Esquadria Fachada Piso-Teto",
+      "category": "Architecture",
+      "lod0": "storage/web/window_lod0.glb"
+    }
+  ],
+  "materials": [
+    {
+      "id": "mat-glass-crystal",
+      "preset": "glass",
+      "name": "Vidro Cristal 8mm"
+    },
+    {
+      "id": "mat-wood-cumaru",
+      "preset": "wood",
+      "name": "Madeira Cumaru Maciça"
+    },
+    {
+      "id": "mat-stone-travertino",
+      "preset": "stone",
+      "name": "Mármore Travertino Navona"
+    },
+    {
+      "id": "mat-fabric-linen",
+      "preset": "fabric",
+      "name": "Tecido Linho Cinza"
+    }
+  ],
+  "bim": {
+    "schema": "IFC4",
+    "ifcModelPath": "storage/bim/residencia_praia.ifc",
+    "revitSync": {
+      "enabled": true,
+      "lastSync": "2026-09-23T17:55:00.000Z",
+      "modelGuid": "b7a9f2e1-482a-43c2-9e91"
+    },
+    "elementCount": 142
+  },
+  "cameras": [
+    {
+      "id": "cam-iso",
+      "name": "Vista Isométrica Geral",
+      "pos": [20, 16, 24],
+      "target": [0, 2, 0],
+      "fov": 45
+    },
+    {
+      "id": "cam-living-01",
+      "name": "Living Perspectiva Humana",
+      "pos": [-8, 4, 9],
+      "target": [-4, 1.5, 3],
+      "fov": 50
+    },
+    {
+      "id": "cam-gourmet-01",
+      "name": "Varanda & Piscina",
+      "pos": [11, 4, -2],
+      "target": [5, 0.5, -5],
+      "fov": 55
+    }
+  ],
+  "lighting": {
+    "sun": {
+      "intensity": 1.6,
+      "temperature": 5500,
+      "position": [18, 26, 15]
+    },
+    "sky": {
+      "intensity": 0.85,
+      "temperature": 6500
+    },
+    "hdri": {
+      "path": "assets/hdri/litoral_sky_2k.hdr",
+      "exposure": 1.15
+    }
+  },
+  "lodConfig": {
+    "strategy": "distance-and-screen-coverage",
+    "thresholds": {
+      "lod0MaxM": 12,
+      "lod1MaxM": 35,
+      "lod2MaxM": 100
+    }
+  },
+  "optimization": {
+    "dracoEnabled": true,
+    "meshoptEnabled": true,
+    "ktx2Enabled": true,
+    "textureCompression": "WebP/Basis"
+  },
+  "permissions": {
+    "allowMeasurements": true,
+    "allowComments": true,
+    "allowFullscreen": true,
+    "allowQualityChange": true
+  }
+}

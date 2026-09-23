@@ -1,0 +1,55 @@
+# ==============================================================================
+# ARQVERTICE STUDIO — .gitignore
+# ==============================================================================
+
+# Dependências
+node_modules/
+.pnpm-store/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Variáveis de Ambiente e Segredos (NUNCA COMITAR!)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+*.pem
+*.key
+*.pfx
+*.cert
+*.crt
+*.id_rsa
+*.id_ecdsa
+credentials.json
+service-account.json
+token.json
+
+# Bancos de Dados e Arquivos Temporários
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Caches de Build e IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+dist/
+build/
+.cache/
+.parcel-cache/
+.system_generated/
+
+# Uploads Locais de Teste e Temporários
+storage/temp/
+storage/uploads/
+storage/projects/*/source/*
+!storage/projects/*/source/.gitkeep

@@ -1,0 +1,3 @@
+[    3202ms] [WARNING] Scripts "build/three.js" and "build/three.min.js" are deprecated with r150+, and will be removed with r160. Please use ES Modules or alternatives: https://threejs.org/docs/index.html#manual/en/introduction/Installation @ https://unpkg.com/three@0.160.0/build/three.min.js:0
+[    3270ms] [LOG] Inicializando ArqVertice Contextual AI Module (I10)... @ http://localhost:3000/js/contextual-ai-module.js:460
+[    3272ms] [LOG] Inicializando ArqVertice Studio... @ http://localhost:3000/js/app.js:11

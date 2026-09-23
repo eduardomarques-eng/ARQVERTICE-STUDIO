@@ -1,0 +1,10 @@
+{
+  "projectId": "J43-TEST-PROJECT",
+  "fileName": "ArqVertice_J43_Test_Project.rvt",
+  "purpose": "Dedicated non-production project for Revit integration QA",
+  "dedicated": true,
+  "destructiveOperationsAllowed": true,
+  "requiredCategories": ["Walls", "Doors", "Windows", "Floors", "Roofs", "Rooms"],
+  "requiredViews": ["Plan", "Section", "Elevation", "3D", "Perspective"],
+  "requiredChecks": ["read", "quantity", "geometry", "camera", "sync", "rollback", "worksharing", "security"]
+}

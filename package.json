@@ -1,0 +1,40 @@
+{
+  "name": "arqvertice-studio",
+  "version": "1.0.0",
+  "description": "ArqVértice Studio — Plataforma Arquitetônica Integrada, BIM, 3D Realtime & IA",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node scripts/run-all-tests.js",
+    "test:unit": "node tests/ai-3d-intelligence.test.js",
+    "test:integration": "node tests/deploy-and-rollback.test.js",
+    "test:security": "node tests/hardening-and-compliance.test.js",
+    "test:visual": "node tests/visual-responsive-qa.test.js",
+    "test:a11y": "node tests/visual-responsive-qa.test.js",
+    "test:env": "node scripts/validate-env.js",
+    "test:perf": "node scripts/performance-budget-check.js",
+    "test:integrity": "node scripts/db/data-integrity-check.js",
+    "release:check": "node scripts/release-candidate-check.js",
+    "test:smoke": "node scripts/post-deploy-smoke-test.js",
+    "test:3d": "node tests/3d-production-qa-gate.test.js",
+    "lint": "node scripts/audit-and-build.js",
+    "typecheck": "node scripts/typecheck-dryrun.js",
+    "build": "node scripts/production-build.js"
+  },
+  "keywords": [
+    "architecture",
+    "bim",
+    "threejs",
+    "webgpu",
+    "gaussian-splats",
+    "revit",
+    "ai"
+  ],
+  "author": "ArqVértice Engineering Team",
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

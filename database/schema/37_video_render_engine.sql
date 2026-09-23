@@ -1,0 +1,59 @@
+-- ============================================================================
+-- ARQVERTICE STUDIO — SEÇÃO 37: VIDEO RENDER ENGINE (BLOCO G13)
+-- ============================================================================
+-- Pipeline de Renderização e Exportação de Vídeo.
+--
+-- OBJETIVO:
+-- Orquestrar a renderização assíncrona da timeline de vídeo para formatos finais.
+--
+-- FORMATOS:
+-- • MP4 como prioridade absoluta (formato padrão com compatibilidade universal).
+-- • Arquitetura preparada para WebM, ProRes e outros formatos futuros.
+--
+-- CONFIGURAÇÕES SUPORTADAS:
+-- • Resolução (1080p padrão inicial, preparada para 4K, 720p, 1440p)
+-- • FPS (24, 30, 60 fps)
+-- • Bitrate (kbps configurável)
+-- • Áudio (codec AAC/Opus, bitrate, canais estéreo/surround, sample rate)
+-- • Codec (H.264/AVC, H.265/HEVC, VP9, ProRes)
+-- • Proporção / Aspect Ratio (16:9, 9:16, 1:1, 4:5, 21:9)
+--
+-- PRESETS ARQUITETURAIS:
+-- ┌──────────────────────┬────────────┬──────┬─────────┬──────────────┬───────────────┐
+-- │ Preset               │ Resolução  │ FPS  │ Codec   │ Bitrate      │ Áudio         │
+-- ├──────────────────────┼────────────┼──────┼─────────┼──────────────┼───────────────┤
+-- │ WEB                  │ 1080p 16:9 │ 30   │ H.264   │ 8.000 kbps   │ AAC 192 kbps  │
+-- │ SOCIAL_VERTICAL      │ 1080p 9:16 │ 30   │ H.264   │ 10.000 kbps  │ AAC 192 kbps  │
+-- │ SOCIAL_HORIZONTAL    │ 1080p 16:9 │ 30   │ H.264   │ 10.000 kbps  │ AAC 192 kbps  │
+-- │ CLIENT_PRESENTATION  │ 1080p 16:9 │ 60   │ H.264   │ 16.000 kbps  │ AAC 320 kbps  │
+-- │ HIGH_QUALITY         │ 4K 16:9    │ 60   │ H.265   │ 35.000 kbps  │ AAC 320 kbps  │
+-- └──────────────────────┴────────────┴──────┴─────────┴──────────────┴───────────────┘
+--
+-- RESOLUÇÕES:
+-- • 1080p como padrão inicial (1920x1080 para 16:9 / 1080x1920 para 9:16)
+-- • Arquitetura preparada para 4K (3840x2160 para 16:9 / 2160x3840 para 9:16)
+-- • Heterogeneidade de Provedores de IA: NÃO assumir que todos os providers geram
+--   a mesma resolução. O pipeline normaliza (upscale, downscale, letterbox/pillarbox)
+--   os clipes gerados para a resolução alvo do render job.
+--
+-- CICLO DE VIDA DO PROCESSAMENTO (STATUS FLOW):
+--      queued ──► processing ──┬──► completed
+--                             ├──► failed (permite retry; projeto preservado)
+--                             └──► cancelled
+--
+-- INFORMAÇÕES DE PROCESSAMENTO EXIBIDAS:
+-- • Fila de espera (posição e prioridade)
+-- • Progresso percentual (0.00% a 100.00%) com fase atual
+-- • Tempo (tempo decorrido e tempo estimado restante)
+-- • Status atual
+-- • Mensagem de erro e detalhes técnicos em caso de falha
+--
+-- RESILIÊNCIA & TOLERÂNCIA A FALHAS:
+-- • Se o job falhar, NUNCA perder o projeto, nem a timeline, nem os clipes.
+-- • Permitir RETRY a qualquer momento, incrementando retry_count e registrando histórico.
+--
+-- VERSIONAMENTO DE VÍDEO:
+-- • Cada render bem-sucedido cria um registro na tabela `video_render_versions`.
+-- • Numeração incremental canônica: v1.0, v1.1, v2.0...
+-- • Permite comparar versões, alternar versão primária e manter histórico de aprovações.
+-- ============================================================================

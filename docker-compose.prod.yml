@@ -1,0 +1,144 @@
+# ==============================================================================
+# ARQVERTICE STUDIO — ARQUITETURA DOCKER-COMPOSE DE PRODUÇÃO
+# ==============================================================================
+
+version: '3.8'
+
+services:
+  # ----------------------------------------------------------------------------
+  # 1. ARQVERTICE WEB (Aplicação Principal: Studio, Portal & Client Viewer)
+  # ----------------------------------------------------------------------------
+  arqvertice-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    container_name: arqvertice-web
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DATABASE_URL=sqlite:///app/database/arqvertice_prod.db
+      - STORAGE_ROOT=/app/storage
+      - S3_ENDPOINT=${S3_ENDPOINT:-https://s3.arqvertice.com}
+      - S3_BUCKET_NAME=${S3_BUCKET_NAME:-arqvertice-assets}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://app.arqvertice.com,https://viewer.arqvertice.com}
+      - JWT_SECRET=${JWT_SECRET}
+      - SESSION_SECRET=${SESSION_SECRET}
+      - OLLAMA_HOST=${OLLAMA_HOST:-http://ollama-service:11434}
+      - AI_GATEWAY_URL=${AI_GATEWAY_URL:-https://api.omniroute.ai/v1}
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=128m
+    volumes:
+      - assets-storage:/app/storage
+      - db-data:/app/database
+      - audit-logs:/app/logs
+    deploy:
+      resources:
+        limits:
+          cpus: '2.00'
+          memory: 2048M
+        reservations:
+          cpus: '0.50'
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:3000/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    networks:
+      - arqvertice-network
+
+  # ----------------------------------------------------------------------------
+  # 2. ARQVERTICE WORKER (Fila Assíncrona de Processamento 3D & LODs)
+  # ----------------------------------------------------------------------------
+  arqvertice-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    container_name: arqvertice-worker
+    command: ["node", "scripts/asset-worker.js"]
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - STORAGE_ROOT=/app/storage
+      - DATABASE_URL=sqlite:///app/database/arqvertice_prod.db
+      - JWT_SECRET=${JWT_SECRET}
+      - SESSION_SECRET=${SESSION_SECRET}
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=128m
+    volumes:
+      - assets-storage:/app/storage
+      - db-data:/app/database
+      - audit-logs:/app/logs
+    deploy:
+      resources:
+        limits:
+          cpus: '2.00'
+          memory: 3072M
+        reservations:
+          cpus: '0.50'
+          memory: 512M
+    depends_on:
+      - arqvertice-web
+    networks:
+      - arqvertice-network
+
+  # ----------------------------------------------------------------------------
+  # 3. REVERSE PROXY (Caddy — Terminação TLS, HTTP/2, HTTP/3 & CDN Edge Caching)
+  # ----------------------------------------------------------------------------
+  reverse-proxy:
+    image: caddy:2.8-alpine
+    container_name: arqvertice-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    deploy:
+      resources:
+        limits:
+          cpus: '1.00'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    depends_on:
+      - arqvertice-web
+    networks:
+      - arqvertice-network
+
+# ------------------------------------------------------------------------------
+# REDES E VOLUMES PERSISTENTES
+# ------------------------------------------------------------------------------
+networks:
+  arqvertice-network:
+    driver: bridge
+
+volumes:
+  db-data:
+    name: arqvertice_db_data
+  assets-storage:
+    name: arqvertice_assets_storage
+  audit-logs:
+    name: arqvertice_audit_logs
+  caddy-data:
+    name: arqvertice_caddy_data
+  caddy-config:
+    name: arqvertice_caddy_config

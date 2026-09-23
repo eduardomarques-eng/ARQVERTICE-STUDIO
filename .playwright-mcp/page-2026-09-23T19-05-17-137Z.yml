@@ -1,0 +1,560 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - complementary [ref=f2e3]:
+      - generic [ref=f2e4]:
+        - img "ArqVértice Studio Logo" [ref=f2e5]
+        - generic [ref=f2e6]:
+          - heading "ARQVÉRTICE" [level=2] [ref=f2e7]
+          - generic [ref=f2e8]: STUDIO
+      - navigation [ref=f2e9]:
+        - generic [ref=f2e10]: Navegação Principal
+        - generic [ref=f2e11] [cursor=pointer]: Dashboard
+        - generic [ref=f2e18] [cursor=pointer]: Projetos & Obras
+        - generic [ref=f2e23] [cursor=pointer]: Workspace do Projeto
+        - generic [ref=f2e27] [cursor=pointer]: Ambientes & 3D
+        - generic [ref=f2e31] [cursor=pointer]:
+          - generic [ref=f2e36]: Revit BIM
+          - generic [ref=f2e37]: BIM
+        - generic [ref=f2e38] [cursor=pointer]:
+          - generic [ref=f2e42]: 3D Studio
+          - generic [ref=f2e43]: 3D
+        - generic [ref=f2e44] [cursor=pointer]: Cronograma Global
+        - generic [ref=f2e48]: Acesso Rápido
+        - generic [ref=f2e49] [cursor=pointer]: Novo Projeto
+        - generic [ref=f2e53] [cursor=pointer]: Relatório Executivo
+        - generic [ref=f2e58] [cursor=pointer]: Motor de Apresentação
+        - generic [ref=f2e63] [cursor=pointer]: Vídeo do Projeto
+        - generic [ref=f2e68] [cursor=pointer]: Portal do Cliente
+      - generic [ref=f2e74]: Sistema Conectado • v2.4.0
+    - generic [ref=f2e78]:
+      - banner [ref=f2e79]:
+        - navigation "Trilha de navegação" [ref=f2e81]:
+          - generic [ref=f2e82]: ArqVértice Studio
+          - generic [ref=f2e85]: ArqVértice 3D Studio
+        - generic [ref=f2e86]:
+          - button "Command Center e IA" [ref=f2e87] [cursor=pointer]
+          - generic "Persistência automática ativa" [ref=f2e91]: Salvo
+          - button "Alternar tema" [ref=f2e95] [cursor=pointer]
+          - button "Criar Projeto" [ref=f2e102] [cursor=pointer]
+      - main [ref=f2e105]:
+        - region "ArqVertice 3D Studio" [ref=f2e106]:
+          - generic [ref=f2e107]:
+            - generic [ref=f2e108]:
+              - generic [ref=f2e109]: ARQVERTICE
+              - strong [ref=f2e110]: 3D STUDIO
+              - generic [ref=f2e111]: Project 3D Core
+            - toolbar "Ferramentas de câmera" [ref=f2e112]:
+              - button "◉ orbit" [ref=f2e113] [cursor=pointer]
+              - button "✥ pan" [ref=f2e114] [cursor=pointer]
+              - button "⌕ zoom" [ref=f2e115] [cursor=pointer]
+              - button "↗ fly" [ref=f2e116] [cursor=pointer]
+              - button "⌂ walk" [ref=f2e117] [cursor=pointer]
+              - button "Focus" [ref=f2e118] [cursor=pointer]
+              - button "Reset" [ref=f2e119] [cursor=pointer]
+            - generic [ref=f2e120]:
+              - generic [ref=f2e121]:
+                - text: Quality
+                - combobox "Quality" [ref=f2e122]:
+                  - option "Draft"
+                  - option "Realtime" [selected]
+                  - option "High"
+                  - option "Cinematic"
+              - button "Import asset" [ref=f2e123] [cursor=pointer]
+          - generic [ref=f2e124]:
+            - complementary [ref=f2e125]:
+              - generic [ref=f2e126]:
+                - generic [ref=f2e127]: SCENE TREE
+                - button "+" [ref=f2e128] [cursor=pointer]
+              - generic [ref=f2e129]:
+                - button "Isolate" [ref=f2e130] [cursor=pointer]
+                - button "Show all" [ref=f2e131] [cursor=pointer]
+                - button "Rename" [ref=f2e132] [cursor=pointer]
+              - generic [ref=f2e133]:
+                - button "▾ ◇ ArqVertice 3D Project ArqVertice ●" [ref=f2e134] [cursor=pointer]:
+                  - generic [ref=f2e135]: ▾
+                  - generic [ref=f2e136]: ◇
+                  - generic [ref=f2e137]: ArqVertice 3D Project
+                  - generic [ref=f2e138]: ArqVertice
+                  - generic [ref=f2e139]: ●
+                - button "▾ ◈ Living Study ArqVertice ●" [ref=f2e140] [cursor=pointer]:
+                  - generic [ref=f2e141]: ▾
+                  - generic [ref=f2e142]: ◈
+                  - generic [ref=f2e143]: Living Study
+                  - generic [ref=f2e144]: ArqVertice
+                  - generic [ref=f2e145]: ●
+                - button "▾ □ Living Integrado ArqVertice ●" [ref=f2e146] [cursor=pointer]:
+                  - generic [ref=f2e147]: ▾
+                  - generic [ref=f2e148]: □
+                  - generic [ref=f2e149]: Living Integrado
+                  - generic [ref=f2e150]: ArqVertice
+                  - generic [ref=f2e151]: ●
+                - button "· ◇ Parede Norte Revit ●" [ref=f2e152] [cursor=pointer]:
+                  - generic [ref=f2e153]: ·
+                  - generic [ref=f2e154]: ◇
+                  - generic [ref=f2e155]: Parede Norte
+                  - generic [ref=f2e156]: Revit
+                  - generic [ref=f2e157]: ●
+                - button "· ◇ Parede Sul Revit ●" [ref=f2e158] [cursor=pointer]:
+                  - generic [ref=f2e159]: ·
+                  - generic [ref=f2e160]: ◇
+                  - generic [ref=f2e161]: Parede Sul
+                  - generic [ref=f2e162]: Revit
+                  - generic [ref=f2e163]: ●
+                - button "· ◇ Piso Living Revit ●" [ref=f2e164] [cursor=pointer]:
+                  - generic [ref=f2e165]: ·
+                  - generic [ref=f2e166]: ◇
+                  - generic [ref=f2e167]: Piso Living
+                  - generic [ref=f2e168]: Revit
+                  - generic [ref=f2e169]: ●
+                - button "· ◇ Porta Entrada Revit ●" [ref=f2e170] [cursor=pointer]:
+                  - generic [ref=f2e171]: ·
+                  - generic [ref=f2e172]: ◇
+                  - generic [ref=f2e173]: Porta Entrada
+                  - generic [ref=f2e174]: Revit
+                  - generic [ref=f2e175]: ●
+                - button "· ◇ Janela Fachada Revit ●" [ref=f2e176] [cursor=pointer]:
+                  - generic [ref=f2e177]: ·
+                  - generic [ref=f2e178]: ◇
+                  - generic [ref=f2e179]: Janela Fachada
+                  - generic [ref=f2e180]: Revit
+                  - generic [ref=f2e181]: ●
+                - button "· ◇ Sofa Principal ArqVertice ●" [ref=f2e182] [cursor=pointer]:
+                  - generic [ref=f2e183]: ·
+                  - generic [ref=f2e184]: ◇
+                  - generic [ref=f2e185]: Sofa Principal
+                  - generic [ref=f2e186]: ArqVertice
+                  - generic [ref=f2e187]: ●
+            - main [ref=f2e188]:
+              - generic [ref=f2e189]:
+                - generic [ref=f2e190]: Living Study / Perspective
+                - generic [ref=f2e191]: LIVE
+              - generic [ref=f2e192]:
+                - generic "Viewport 3D" [ref=f2e193]
+                - generic: +
+              - generic [ref=f2e194]:
+                - generic [ref=f2e195]: Living Integrado / zone_1790190316383_kmde7q
+                - generic [ref=f2e196]:
+                  - text: Snap
+                  - combobox [ref=f2e197]:
+                    - option "Off"
+                    - option "0.10m" [selected]
+                    - option "0.50m"
+                    - option "1.00m"
+                - generic [ref=f2e198]:
+                  - text: Gizmo
+                  - button "Move" [ref=f2e199] [cursor=pointer]
+                  - button "Rotate" [ref=f2e200] [cursor=pointer]
+                  - button "Scale" [ref=f2e201] [cursor=pointer]
+            - complementary [ref=f2e202]:
+              - generic [ref=f2e203]:
+                - generic [ref=f2e204]: PROPERTIES
+                - generic [ref=f2e205]: ZONE
+              - generic [ref=f2e206]:
+                - generic [ref=f2e207]:
+                  - generic [ref=f2e208]:
+                    - text: Name
+                    - textbox "Name" [ref=f2e209]: Living Integrado
+                  - generic [ref=f2e210]:
+                    - text: Visibility
+                    - combobox "Visibility" [ref=f2e211]:
+                      - option "Visible" [selected]
+                      - option "Hidden"
+                - generic [ref=f2e212]:
+                  - heading "Transform" [level=4] [ref=f2e213]
+                  - generic [ref=f2e214]:
+                    - generic [ref=f2e215]: Position
+                    - generic [ref=f2e216]:
+                      - text: x
+                      - textbox "x" [ref=f2e217]: "0.00"
+                    - generic [ref=f2e218]:
+                      - text: "y"
+                      - textbox "y" [ref=f2e219]: "0.00"
+                    - generic [ref=f2e220]:
+                      - text: z
+                      - textbox "z" [ref=f2e221]: "0.00"
+                  - generic [ref=f2e222]:
+                    - generic [ref=f2e223]: Rotation
+                    - generic [ref=f2e224]:
+                      - text: x
+                      - textbox "x" [ref=f2e225]: "0.00"
+                    - generic [ref=f2e226]:
+                      - text: "y"
+                      - textbox "y" [ref=f2e227]: "0.00"
+                    - generic [ref=f2e228]:
+                      - text: z
+                      - textbox "z" [ref=f2e229]: "0.00"
+                  - generic [ref=f2e230]:
+                    - generic [ref=f2e231]: Scale
+                    - generic [ref=f2e232]:
+                      - text: x
+                      - textbox "x" [ref=f2e233]: "1.00"
+                    - generic [ref=f2e234]:
+                      - text: "y"
+                      - textbox "y" [ref=f2e235]: "1.00"
+                    - generic [ref=f2e236]:
+                      - text: z
+                      - textbox "z" [ref=f2e237]: "1.00"
+                - generic [ref=f2e238]:
+                  - heading "Identity" [level=4] [ref=f2e239]
+                  - generic [ref=f2e240]:
+                    - term [ref=f2e241]: Source
+                    - definition [ref=f2e242]: ArqVertice
+                    - term [ref=f2e243]: BIM reference
+                    - definition [ref=f2e244]: Not linked
+                    - term [ref=f2e245]: Version
+                    - definition [ref=f2e246]: "1"
+                    - term [ref=f2e247]: Metadata
+                    - definition [ref=f2e248]: "{}"
+          - generic [ref=f2e249]:
+            - generic [ref=f2e250]:
+              - button "Timeline" [ref=f2e251] [cursor=pointer]
+              - button "Cameras" [ref=f2e252] [cursor=pointer]
+              - button "Views" [ref=f2e253] [cursor=pointer]
+              - button "Diagnostics" [ref=f2e254] [cursor=pointer]
+            - generic [ref=f2e255]: Timeline preparada para câmeras e keyframes.
+  - generic:
+    - generic:
+      - generic:
+        - heading "Cadastrar Novo Projeto" [level=3]
+        - button
+      - generic:
+        - generic:
+          - generic:
+            - generic: Nome do Projeto *
+            - textbox "Nome do Projeto *":
+              - /placeholder: "Ex: Residência Alphaville Eusébio"
+          - generic:
+            - generic: Cliente Titular *
+            - combobox "Cliente Titular *"
+          - generic:
+            - generic: Localização / Cidade
+            - textbox "Localização / Cidade":
+              - /placeholder: "Ex: Eusébio - CE"
+          - generic:
+            - generic: Tipologia
+            - combobox "Tipologia":
+              - option "Residencial Unifamiliar" [selected]
+              - option "Residencial de Praia"
+              - option "Apartamento / Interiores"
+              - option "Comercial / Corporativo"
+          - generic:
+            - generic: Status Inicial
+            - combobox "Status Inicial":
+              - option "Planejamento" [selected]
+              - option "Briefing"
+              - option "Estudos Preliminares"
+              - option "Projeto Executivo"
+              - option "Em Andamento"
+              - option "Visualização 3D"
+              - option "Finalizado"
+          - generic:
+            - generic: Área Construída Estimada (m²)
+            - spinbutton "Área Construída Estimada (m²)"
+          - generic:
+            - generic: Observações do Projeto
+            - textbox "Observações do Projeto":
+              - /placeholder: Informações relevantes sobre o programa de necessidades...
+        - generic:
+          - button "Cancelar"
+          - button "Salvar Projeto"
+  - generic:
+    - generic:
+      - generic:
+        - heading "Cadastrar Novo Ambiente" [level=3]
+        - button
+      - generic:
+        - generic:
+          - generic:
+            - generic: Nome do Cômodo / Ambiente *
+            - textbox "Nome do Cômodo / Ambiente *":
+              - /placeholder: "Ex: Suíte Master do Casal"
+          - generic:
+            - generic: Tipo de Ambiente
+            - combobox "Tipo de Ambiente":
+              - option "Sala / Living" [selected]
+              - option "Cozinha / Gourmet"
+              - option "Quarto / Suíte"
+              - option "Banheiro / Lavabo"
+              - option "Deck / Área Externa"
+              - option "Circulação / Hall"
+              - option "Área de Serviço"
+              - option "Outro Setor"
+          - generic:
+            - generic: Área Líquida (m²)
+            - spinbutton "Área Líquida (m²)"
+          - generic:
+            - generic: Pavimento
+            - combobox "Pavimento":
+              - option "Térreo" [selected]
+              - option "Pavimento Superior"
+              - option "Subsolo"
+              - option "Cobertura / Rooftop"
+              - option "Exterior"
+          - generic:
+            - generic: Status do Ambiente
+            - combobox "Status do Ambiente":
+              - option "Não iniciado" [selected]
+              - option "Em desenvolvimento"
+              - option "Em revisão"
+              - option "Aprovado"
+              - option "Finalizado"
+          - generic:
+            - generic: Progresso (%)
+            - spinbutton "Progresso (%)": "0"
+          - generic:
+            - generic: Descrição Arquitetônica
+            - textbox "Descrição Arquitetônica":
+              - /placeholder: "Ex: Suíte com closet integrado e bancada dupla em quartzito..."
+          - generic:
+            - generic: Objetivo do Ambiente
+            - textbox "Objetivo do Ambiente":
+              - /placeholder: "Ex: Proporcionar relaxamento e privacidade acústica aos clientes..."
+        - generic:
+          - button "Cancelar"
+          - button "Salvar Ambiente"
+  - generic:
+    - generic:
+      - generic:
+        - heading "Cadastrar Nova Entrega" [level=3]
+        - button
+      - generic:
+        - generic:
+          - generic:
+            - generic: Nome da Entrega / Tarefa *
+            - textbox "Nome da Entrega / Tarefa *":
+              - /placeholder: "Ex: Projeto Executivo de Alvenaria"
+          - generic:
+            - generic: Disciplina Responsável *
+            - combobox "Disciplina Responsável *":
+              - option "Arquitetura" [selected]
+              - option "Projeto 3D"
+              - option "Projeto Estrutural"
+              - option "Instalações Complementares"
+              - option "Execução de Obra"
+          - generic:
+            - generic: Etapa Canônica do Empreendimento
+            - combobox "Etapa Canônica do Empreendimento":
+              - option "Briefing (Requisitos e Necessidades)"
+              - option "Estudo Preliminar (Conceito e Volumetria)"
+              - option "Projeto (Básico e Executivo)" [selected]
+              - option "Apresentação (Dossiê e Pranchas)"
+              - option "Revisão (Alterações e Homologação)"
+              - option "Entrega (Centro de Entrega e Emissão Final)"
+          - generic:
+            - generic: Profissional Responsável
+            - combobox "Profissional Responsável":
+              - option "Eduardo Marques (Arquiteto Projetista)" [selected]
+              - option "Luan Almeida (Engenheiro Calculista)"
+              - option "Erick Santiago (Engenheiro de Obra)"
+          - generic:
+            - generic: Data de Início
+            - textbox "Data de Início":
+              - /placeholder: DD-MM-AAAA
+          - generic:
+            - generic: Data de Conclusão Prevista
+            - textbox "Data de Conclusão Prevista":
+              - /placeholder: DD-MM-AAAA
+          - generic:
+            - generic: Progresso Físico (%)
+            - spinbutton "Progresso Físico (%)": "0"
+          - generic:
+            - generic: Detalhamento da Entrega
+            - textbox "Detalhamento da Entrega":
+              - /placeholder: Especificações técnicas, escopo e entregáveis inclusos...
+        - generic:
+          - button "Cancelar"
+          - button "Salvar Entrega"
+  - generic:
+    - generic:
+      - generic:
+        - heading "Upload Técnico Classificado" [level=3]
+        - button
+      - generic:
+        - generic:
+          - paragraph: Vincule pranchas, imagens ou catálogos classificados diretamente ao ambiente e sua versão técnica ativa.
+          - generic:
+            - generic: Categoria do Arquivo *
+            - combobox "Categoria do Arquivo *":
+              - option "Planta Baixa" [selected]
+              - option "Perspectiva 3D"
+              - option "Elevação"
+              - option "Corte Técnico"
+              - option "Foto de Vistoria"
+              - option "Referência Visual"
+              - option "Amostra de Material"
+              - option "Mobiliário"
+              - option "Render de Alta Resolução"
+              - option "Documento Técnico"
+              - option "Outro"
+          - generic:
+            - generic: Versão Relacionada *
+            - textbox "Versão Relacionada *": V01
+          - generic:
+            - generic: Título / Identificação
+            - textbox "Título / Identificação":
+              - /placeholder: "Ex: Vista do Deck com Piscina"
+          - generic:
+            - generic: Selecione o Arquivo (ou utilize imagem padrão)
+            - button "Selecione o Arquivo (ou utilize imagem padrão)"
+        - generic:
+          - button "Cancelar"
+          - button "Confirmar Upload"
+  - generic:
+    - generic:
+      - paragraph
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - heading "Relatório Executivo Oficial de Cronograma & Obras" [level=2]
+            - paragraph: Dossiê técnico consolidado para o cliente com alto contraste e clareza
+        - generic:
+          - button "Imprimir"
+          - button "Baixar PDF"
+          - button "Fechar Modal"
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - img "ArqVértice Logo"
+              - generic:
+                - heading "RELATÓRIO EXECUTIVO DE CRONOGRAMA & OBRAS" [level=1]
+                - paragraph: ArqVértice • Arquitetura, Estrutura & Engenharia
+                - paragraph: Excelência técnica, organização e rigor executivo do projeto ao canteiro de obras.
+            - generic:
+              - generic:
+                - strong: "Emissão:"
+                - text: "-"
+              - generic:
+                - strong: "Documento:"
+                - text: Dossiê de Acompanhamento Físico
+              - generic:
+                - strong: "Status Geral:"
+                - generic: Em Andamento
+          - generic:
+            - heading "1. DADOS DE ENTRADA E FICHA TÉCNICA DO PROJETO" [level=3]
+            - generic:
+              - generic:
+                - generic: "OBRA:"
+                - strong: Residência de Praia
+              - generic:
+                - generic: "CLIENTE / CONTRATANTE:"
+                - strong: Pedro
+              - generic:
+                - generic: "LOCALIZAÇÃO:"
+                - strong: Loteamento Praia Bela, Litoral Sul
+              - generic:
+                - generic: "LOTE / QUADRA:"
+                - strong: Lote 14, Quadra B
+              - generic:
+                - generic: "ÁREA CONSTRUÍDA:"
+                - strong: 385,00 m²
+              - generic:
+                - generic: "ÁREA DO LOTE:"
+                - strong: 450,00 m² (15m x 30m)
+              - generic:
+                - generic: "ZONEAMENTO:"
+                - strong: Zona Residencial (ZR-1)
+              - generic:
+                - generic: "CRONOGRAMA CONTRATUAL:"
+                - strong: 12/06/2026 a 30/11/2026
+          - generic:
+            - heading "2. QUADRO TÉCNICO DE ENGENHARIA & ARQUITETURA" [level=3]
+            - generic:
+              - generic:
+                - strong: 🏗️ Execução de Obra
+                - generic: Erick Santiago
+                - generic: Engenheiro de Obra • Gestão de Campo e Canteiro
+              - generic:
+                - strong: 🏢 Projeto Estrutural
+                - generic: Luan Almeida
+                - generic: Engenheiro Calculista • Fundações, Formas e Armaduras
+              - generic:
+                - strong: 📐 Arquitetura, 3D & Complementares
+                - generic: Eduardo Marques
+                - generic: Arquiteto Projetista • Projeto Executivo, Modelagem/Render 3D, Elétrico e Hidrossanitário
+          - generic:
+            - heading "3. FASE ATUAL DO EMPREENDIMENTO" [level=3]
+          - generic:
+            - heading "4. PARECER TÉCNICO EXECUTIVO DO CRONOGRAMA" [level=3]
+          - generic:
+            - heading "5. RESUMO DE AVANÇO FÍSICO POR DISCIPLINA" [level=3]
+            - generic:
+              - generic:
+                - generic: Progresso Geral
+                - generic: 0%
+                - generic: 0 de 0 concluídas
+              - generic:
+                - generic:
+                  - generic: Arquitetura
+                  - generic: Eduardo
+                - generic: 0%
+                - generic: 0 finalizadas
+              - generic:
+                - generic:
+                  - generic: Projeto 3D
+                  - generic: Eduardo
+                - generic: 0%
+                - generic: 0 finalizadas
+              - generic:
+                - generic:
+                  - generic: Estrutura
+                  - generic: Luan
+                - generic: 0%
+                - generic: 0 finalizadas
+              - generic:
+                - generic:
+                  - generic: Complementares
+                  - generic: Eduardo
+                - generic: 0%
+                - generic: 0 a iniciar
+              - generic:
+                - generic:
+                  - generic: Execução Obras
+                  - generic: Erick
+                - generic: 0%
+                - generic: Não iniciada
+          - generic:
+            - heading "6. QUADRO CONSOLIDADO DE ETAPAS & ENTREGAS" [level=3]
+            - table:
+              - rowgroup:
+                - row "Descrição / Etapa Disciplina Responsável Técnico Data Limite Avanço Físico Status":
+                  - columnheader "Descrição / Etapa"
+                  - columnheader "Disciplina"
+                  - columnheader "Responsável Técnico"
+                  - columnheader "Data Limite"
+                  - columnheader "Avanço Físico"
+                  - columnheader "Status"
+              - rowgroup
+          - generic:
+            - strong: "Critérios Oficiais de Acompanhamento:"
+            - generic:
+              - generic: ">= 0% (Fase Inicial)"
+              - generic: < 40% a < 99% (Em Andamento)
+              - generic: ">= 99% (Concluído)"
+              - generic: "⚠️ Alerta: Entrega em ≤ 7 dias"
+          - generic:
+            - generic:
+              - generic:
+                - generic: Eduardo Marques
+                - generic: Arquiteto Projetista
+              - generic:
+                - generic: Luan Almeida
+                - generic: Engenheiro Calculista
+              - generic:
+                - generic: Erick Santiago
+                - generic: Engenheiro de Obra
+              - generic:
+                - generic: Pedro
+                - generic: Cliente / Contratante
+            - paragraph: Documento Oficial de Engenharia e Arquitetura • ArqVértice • Validade Técnica e Contratual
+  - generic [aria-hidden]:
+    - dialog:
+      - generic:
+        - textbox:
+          - /placeholder: "Comando em linguagem natural (ex: 'analise esta sala', 'prepare o roteiro')..."
+        - generic: ESC
+      - listbox
+  - status: Ação concluída com sucesso.

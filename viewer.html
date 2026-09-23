@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ArqVértice — Visualizador 3D do Cliente</title>
+  
+  <meta name="description" content="Experiência imersiva 3D do seu projeto arquitetônico. ArqVértice Studio.">
+  <meta name="author" content="ArqVértice • Arquitetura, Estrutura & Engenharia">
+  
+  <!-- Fontes Oficiais -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Estilos do Viewer -->
+  <link rel="stylesheet" href="css/client-viewer.css?v=1.0.0">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Root App -->
+  <div id="arq-client-viewer-app">
+
+    <!-- Canvas 3D Edge-to-Edge -->
+    <div id="viewer-canvas-container">
+      <canvas id="viewer-3d-canvas"></canvas>
+    </div>
+
+    <!-- Vinheta Sutil de Fundo -->
+    <div class="viewer-vignette"></div>
+
+    <!-- Hotspots Markers 3D Container -->
+    <div id="viewer-hotspots-markers"></div>
+
+    <!-- Barra Superior Flutuante (Header) -->
+    <header class="viewer-header">
+      <div class="viewer-brand-badge">
+        <img src="logo.png" alt="ArqVértice" class="viewer-logo-icon" onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=100&q=80'">
+        <div class="viewer-project-info">
+          <div class="viewer-project-title">
+            <span id="viewer-header-title">Residência de Praia</span>
+            <span class="viewer-badge-tag" id="viewer-header-tag">3D CLIENTE</span>
+          </div>
+          <div class="viewer-project-sub" id="viewer-header-sub">Litoral Sul • 385 m²</div>
+        </div>
+      </div>
+
+      <div class="viewer-header-actions">
+        <button class="viewer-icon-btn" onclick="ClientViewerModule.openShareModal()" title="Compartilhar Link Seguro">
+          <i data-lucide="share-2"></i>
+        </button>
+        <button class="viewer-icon-btn" onclick="ClientViewerModule.captureScreenshot()" title="Capturar Screenshot HD">
+          <i data-lucide="camera"></i>
+        </button>
+        <button class="viewer-icon-btn" onclick="ClientViewerModule.toggleFullscreen()" title="Tela Cheia">
+          <i data-lucide="maximize"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Barra de Vistas Rápidas (Esquerda) -->
+    <div class="viewer-views-bar">
+      <button class="viewer-view-pill active" onclick="ClientViewerModule.setViewPreset('isometric')" title="Vista Isométrica (1)">ISO</button>
+      <button class="viewer-view-pill" onclick="ClientViewerModule.setViewPreset('top')" title="Vista Superior / Planta (2)">TOP</button>
+      <button class="viewer-view-pill" onclick="ClientViewerModule.setViewPreset('front')" title="Vista Frontal (3)">FAC</button>
+      <button class="viewer-view-pill" onclick="ClientViewerModule.setViewPreset('side')" title="Vista Lateral">LAT</button>
+    </div>
+
+    <!-- HUD da Trena Virtual 3D -->
+    <div class="viewer-measure-hud" id="viewer-measure-hud">
+      <i data-lucide="ruler" style="color: var(--viewer-gold); width: 18px; height: 18px;"></i>
+      <span class="viewer-measure-value" id="viewer-measure-val">0.00 m</span>
+      <span class="viewer-measure-hint">Clique em dois pontos para medir</span>
+      <button class="viewer-measure-clear-btn" onclick="ClientViewerModule.clearMeasurement()" title="Limpar medição">
+        <i data-lucide="x" style="width: 14px; height: 14px;"></i>
+      </button>
+    </div>
+
+    <!-- HUD de Telemetria e Diagnóstico -->
+    <div class="viewer-telemetry-hud" id="viewer-telemetry-hud">
+      <div class="telemetry-row">
+        <span>FPS:</span>
+        <span class="telemetry-val fps-high" id="telemetry-fps">60 FPS</span>
+      </div>
+      <div class="telemetry-row">
+        <span>Draw Calls:</span>
+        <span class="telemetry-val" id="telemetry-calls">42</span>
+      </div>
+      <div class="telemetry-row">
+        <span>Triângulos:</span>
+        <span class="telemetry-val" id="telemetry-triangles">145.200</span>
+      </div>
+      <div class="telemetry-row">
+        <span>Memória GPU:</span>
+        <span class="telemetry-val" id="telemetry-memory">18.4 MB</span>
+      </div>
+      <div class="telemetry-row">
+        <span>Pipeline:</span>
+        <span class="telemetry-val" id="telemetry-api">WebGL2 / Adaptive</span>
+      </div>
+    </div>
+
+    <!-- Popover: Iluminação e Ambiente -->
+    <div class="viewer-popover" id="viewer-popover-env">
+      <div class="viewer-popover-title">Iluminação & Atmosfera</div>
+      <div class="viewer-popover-options">
+        <button class="viewer-popover-item active" data-env-mode="day" onclick="ClientViewerModule.setEnvironmentMode('day')">
+          <div>
+            <span>☀️ Luz Solar do Meio-Dia</span>
+            <span class="item-sub">Iluminação natural limpa com sombras nítidas</span>
+          </div>
+        </button>
+        <button class="viewer-popover-item" data-env-mode="golden" onclick="ClientViewerModule.setEnvironmentMode('golden')">
+          <div>
+            <span>🌅 Golden Hour (Pôr do Sol)</span>
+            <span class="item-sub">Tons quentes e atmosfera poética</span>
+          </div>
+        </button>
+        <button class="viewer-popover-item" data-env-mode="night" onclick="ClientViewerModule.setEnvironmentMode('night')">
+          <div>
+            <span>🌙 Noturno com Spots LED</span>
+            <span class="item-sub">Iluminação cenográfica de interiores e piscina</span>
+          </div>
+        </button>
+        <button class="viewer-popover-item" data-env-mode="studio" onclick="ClientViewerModule.setEnvironmentMode('studio')">
+          <div>
+            <span>💡 Estúdio HDRI Neutro</span>
+            <span class="item-sub">Ideal para análise técnica de volumetria</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Popover: Qualidade Gráfica -->
+    <div class="viewer-popover" id="viewer-popover-quality">
+      <div class="viewer-popover-title">Qualidade Gráfica (Adaptive Engine)</div>
+      <div class="viewer-popover-options">
+        <button class="viewer-popover-item active" data-quality-preset="AUTO" onclick="ClientViewerModule.setQuality('AUTO')">
+          <div>
+            <span>⚡ Automático (Detectar)</span>
+            <span class="item-sub">Ajusta sombras e LOD dinamicamente</span>
+          </div>
+        </button>
+        <button class="viewer-popover-item" data-quality-preset="MOBILE" onclick="ClientViewerModule.setQuality('MOBILE')">
+          <div>
+            <span>📱 Mobile / Baixo Consumo</span>
+            <span class="item-sub">Economia de bateria e alta fluidez</span>
+          </div>
+        </button>
+        <button class="viewer-popover-item" data-quality-preset="BALANCED" onclick="ClientViewerModule.setQuality('BALANCED')">
+          <div>
+            <span>⚖️ Balanceado</span>
+            <span class="item-sub">Sombras médias e 60 FPS garantido</span>
+          </div>
+        </button>
+        <button class="viewer-popover-item" data-quality-preset="HIGH" onclick="ClientViewerModule.setQuality('HIGH')">
+          <div>
+            <span>💎 Alta Qualidade</span>
+            <span class="item-sub">HDRI, reflexos e sombras suaves</span>
+          </div>
+        </button>
+        <button class="viewer-popover-item" data-quality-preset="ULTRA" onclick="ClientViewerModule.setQuality('ULTRA')">
+          <div>
+            <span>🚀 Ultra / WebGPU</span>
+            <span class="item-sub">Máxima fidelidade visual e sombras 4K</span>
+          </div>
+        </button>
+        <button class="viewer-popover-item" data-quality-preset="CINEMATIC" onclick="ClientViewerModule.setQuality('CINEMATIC')">
+          <div>
+            <span>🎬 Cinemático (Progressivo)</span>
+            <span class="item-sub">Super-amostragem para desktop</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Barra Inferior Flutuante (Sketchfab Dock) -->
+    <div class="viewer-dock-wrapper">
+      <div class="viewer-dock">
+        <!-- Hotspots -->
+        <button class="viewer-dock-btn" onclick="ClientViewerModule.toggleHotspotsList()" title="Pontos de Interesse (H)">
+          <i data-lucide="map-pin"></i>
+          <span>Ambientes</span>
+        </button>
+
+        <!-- Pavimentos / Vista Explodida -->
+        <button class="viewer-dock-btn" id="btn-toggle-explode" onclick="ClientViewerModule.toggleExplodedView()" title="Separar Pavimentos">
+          <i data-lucide="layers"></i>
+          <span>Pavimentos</span>
+        </button>
+
+        <!-- Trena 3D -->
+        <button class="viewer-dock-btn" id="btn-toggle-measure" onclick="ClientViewerModule.toggleMeasurement()" title="Trena Virtual 3D (M)">
+          <i data-lucide="ruler"></i>
+          <span>Medir</span>
+        </button>
+
+        <div class="viewer-dock-divider"></div>
+
+        <!-- Iluminação -->
+        <button class="viewer-dock-btn" onclick="ClientViewerModule.togglePopover('env')" title="Trocar Iluminação">
+          <i data-lucide="sun"></i>
+          <span>Iluminação</span>
+        </button>
+
+        <!-- Qualidade Gráfica -->
+        <button class="viewer-dock-btn" id="btn-active-quality" onclick="ClientViewerModule.togglePopover('quality')" title="Ajustar Qualidade">
+          <i data-lucide="sparkles"></i>
+          <span>Qualidade</span>
+        </button>
+
+        <div class="viewer-dock-divider"></div>
+
+        <!-- Anotações / Comentários -->
+        <button class="viewer-dock-btn" onclick="ClientViewerModule.toggleAnnotationMode()" title="Inserir Comentário 3D">
+          <i data-lucide="message-square-plus"></i>
+          <span>Comentar</span>
+        </button>
+
+        <!-- Auto-Rotação -->
+        <button class="viewer-dock-btn" onclick="ClientViewerModule.toggleAutoRotate()" title="Auto Rotação (R)">
+          <i data-lucide="rotate-cw"></i>
+        </button>
+
+        <!-- Telemetria / Diagnóstico -->
+        <button class="viewer-dock-btn" onclick="ClientViewerModule.toggleTelemetry()" title="Estatísticas de Desempenho">
+          <i data-lucide="activity"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Painel Lateral de Hotspots e Informações -->
+    <aside class="viewer-sidebar-panel" id="viewer-sidebar-panel">
+      <div class="viewer-panel-header">
+        <h3 class="viewer-panel-title" id="viewer-panel-title">Pontos de Interesse</h3>
+        <button class="viewer-panel-close" onclick="ClientViewerModule.closeSidebarPanel()">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <!-- Conteúdo: Hotspots -->
+      <div id="panel-content-hotspots" style="display: flex; flex-direction: column; gap: 10px;">
+        <div class="viewer-hotspot-desc" style="margin-bottom: 4px;">Clique em um ambiente para navegar com a câmera:</div>
+        <div id="viewer-hotspots-list" style="display: flex; flex-direction: column; gap: 8px;"></div>
+      </div>
+
+      <!-- Conteúdo: Anotações -->
+      <div id="panel-content-annotations" style="display: none; flex-direction: column; gap: 10px;">
+        <div class="viewer-hotspot-desc">Comentários e feedbacks registrados no projeto:</div>
+        <div id="viewer-annotations-list" style="display: flex; flex-direction: column; gap: 8px;"></div>
+        <button class="viewer-btn-primary" onclick="ClientViewerModule.toggleAnnotationMode()" style="margin-top: 8px; justify-content: center;">
+          <i data-lucide="plus"></i>
+          <span>Novo Comentário no 3D</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Modal de Compartilhamento Seguro -->
+    <div class="viewer-modal-backdrop" id="viewer-share-modal" onclick="if(event.target === this) ClientViewerModule.closeShareModal()">
+      <div class="viewer-modal-card">
+        <div class="viewer-modal-header">
+          <h3 class="viewer-modal-title">Compartilhar Visualizador 3D</h3>
+          <button class="viewer-panel-close" onclick="ClientViewerModule.closeShareModal()">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+
+        <p class="viewer-hotspot-desc">
+          Gere um link seguro para o cliente visualizar o projeto sem necessidade de instalação ou login no sistema interno.
+        </p>
+
+        <div class="viewer-input-group">
+          <input type="text" class="viewer-text-input" id="viewer-share-url-input" readonly>
+          <button class="viewer-btn-primary" onclick="ClientViewerModule.copyShareLink()">
+            <i data-lucide="copy"></i>
+            <span>Copiar</span>
+          </button>
+        </div>
+
+        <div class="viewer-security-notice">
+          <i data-lucide="shield-check" style="color: var(--viewer-green); flex-shrink: 0;"></i>
+          <span>Visualização protegida: sem acesso a dados administrativos ou comandos de edição.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tela de Carregamento Progressivo -->
+    <div class="viewer-loading-screen" id="viewer-loading-screen">
+      <div class="viewer-loading-content">
+        <img src="logo.png" alt="ArqVértice" class="viewer-loading-logo" onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=100&q=80'">
+        <div class="viewer-loading-title">ARQVÉRTICE 3D ENGINE</div>
+        <div class="viewer-loading-sub" id="viewer-loading-sub">Iniciando motor gráfico adaptativo...</div>
+        <div class="viewer-progress-track">
+          <div class="viewer-progress-fill" id="viewer-progress-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Flutuante -->
+    <div class="viewer-toast" id="viewer-toast">Ação executada com sucesso.</div>
+
+  </div>
+
+  <!-- Three.js Engine -->
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+
+  <!-- Scripts do Viewer -->
+  <script src="js/state.js"></script>
+  <script src="js/universal-bim-pipeline.js"></script>
+  <script src="js/universal-asset-pipeline.js"></script>
+  <script src="js/gaussian-splat-pipeline.js"></script>
+  <script src="js/3d-agent-router.js"></script>
+  <script src="js/3d-qa-gate.js"></script>
+  <script src="js/3d-production-infra.js"></script>
+  <script src="js/3d-semantic-index.js"></script>
+  <script src="js/realtime-render-pipeline.js"></script>
+  <script src="js/adaptive-renderer.js"></script>
+  <script src="js/observability/logger.js"></script>
+  <script src="js/observability/client-telemetry-beacon.js"></script>
+  <script src="js/client-viewer-module.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.ClientViewerModule) {
+        window.ClientViewerModule.init();
+      }
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>
