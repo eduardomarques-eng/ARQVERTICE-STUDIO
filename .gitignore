@@ -51,5 +51,6 @@ build/
 # Uploads Locais de Teste e Temporários
 storage/temp/
 storage/uploads/
+storage/snapshots/
 storage/projects/*/source/*
 !storage/projects/*/source/.gitkeep

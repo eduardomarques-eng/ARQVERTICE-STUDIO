@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/portal", "destination": "/portal.html" },
+    { "source": "/viewer", "destination": "/viewer.html" },
+    { "source": "/briefing", "destination": "/briefing.html" },
+    { "source": "/p/:id*", "destination": "/viewer.html" },
+    { "source": "/v/:id*", "destination": "/viewer.html" },
+    { "source": "/3d/:path*", "destination": "/index.html" },
+    { "source": "/3d", "destination": "/index.html" },
+    { "source": "/api/health", "destination": "/api/health" },
+    { "source": "/healthz/:type*", "destination": "/api/healthz?type=:type*" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" }
+      ]
+    },
+    {
+      "source": "/(css|js|storage|video)/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    }
+  ]
+}
