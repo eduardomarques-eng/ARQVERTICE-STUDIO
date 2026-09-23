@@ -1,16 +1,28 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
+  "functions": {
+    "server.js": {
+      "includeFiles": "{index.html,portal.html,viewer.html,briefing.html,styles.css,styles-briefing.css,logo.png,css/**,js/**,storage/**,video/**}"
+    },
+    "api/**/*.js": {
+      "includeFiles": "{index.html,portal.html,viewer.html,briefing.html,styles.css,styles-briefing.css,logo.png,css/**,js/**,storage/**,video/**}"
+    }
+  },
   "rewrites": [
+    { "source": "/api/health", "destination": "/api/health.js" },
+    { "source": "/api/healthz", "destination": "/api/healthz.js" },
+    { "source": "/healthz/:type*", "destination": "/api/healthz.js?type=:type*" },
+    { "source": "/healthz", "destination": "/api/healthz.js" },
+    { "source": "/api/telemetry/render-performance", "destination": "/api/telemetry/render-performance.js" },
+    { "source": "/api/assets/validate-upload", "destination": "/api/assets/validate-upload.js" },
     { "source": "/portal", "destination": "/portal.html" },
     { "source": "/viewer", "destination": "/viewer.html" },
     { "source": "/briefing", "destination": "/briefing.html" },
     { "source": "/p/:id*", "destination": "/viewer.html" },
     { "source": "/v/:id*", "destination": "/viewer.html" },
     { "source": "/3d/:path*", "destination": "/index.html" },
-    { "source": "/3d", "destination": "/index.html" },
-    { "source": "/api/health", "destination": "/api/health" },
-    { "source": "/healthz/:type*", "destination": "/api/healthz?type=:type*" }
+    { "source": "/3d", "destination": "/index.html" }
   ],
   "headers": [
     {
@@ -19,12 +31,6 @@
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
         { "key": "X-XSS-Protection", "value": "1; mode=block" }
-      ]
-    },
-    {
-      "source": "/(css|js|storage|video)/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600" }
       ]
     }
   ]

@@ -132,40 +132,58 @@ const server = http.createServer((req, res) => {
     reqPath = '/logo.png';
   }
 
-  const safePath = path.normalize(path.join(BASE_DIR, reqPath));
-  if (!safePath.startsWith(BASE_DIR)) {
-    res.writeHead(403, { 'Content-Type': 'text/plain' });
-    res.end('Acesso Negado');
+  // Resolução resiliente de caminhos para ambientes locais, Docker e Vercel Serverless
+  function resolveFilePath(targetRelPath) {
+    const searchDirs = [
+      BASE_DIR,
+      process.cwd(),
+      path.join(__dirname, '..'),
+      path.join(process.cwd(), 'public')
+    ];
+    for (const dir of searchDirs) {
+      const candidate = path.normalize(path.join(dir, targetRelPath));
+      if (fs.existsSync(candidate)) {
+        try {
+          if (fs.statSync(candidate).isFile()) {
+            return candidate;
+          }
+        } catch (e) {}
+      }
+    }
+    return null;
+  }
+
+  const resolvedFile = resolveFilePath(reqPath);
+  if (!resolvedFile) {
+    res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.end(`<h1>404 Não Encontrado</h1><p>O arquivo solicitado <code>${reqPath}</code> não existe no servidor.</p>`);
     return;
   }
 
-  fs.stat(safePath, (err, stats) => {
-    if (err || !stats.isFile()) {
-      res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
-      res.end(`<h1>404 Não Encontrado</h1><p>O arquivo solicitado <code>${reqPath}</code> não existe no servidor.</p>`);
-      return;
-    }
+  const ext = path.extname(resolvedFile).toLowerCase();
+  const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
-    const ext = path.extname(safePath).toLowerCase();
-    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
-
-    res.writeHead(200, {
-      'Content-Type': contentType,
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
-      'Access-Control-Allow-Origin': '*'
-    });
-
-    const stream = fs.createReadStream(safePath);
-    stream.pipe(res);
+  res.writeHead(200, {
+    'Content-Type': contentType,
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    'Access-Control-Allow-Origin': '*'
   });
+
+  const stream = fs.createReadStream(resolvedFile);
+  stream.pipe(res);
 });
 
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`================================================================`);
-  console.log(`🚀 ARQVERTICE STUDIO — SERVIDOR LOCAL ATIVO`);
-  console.log(`================================================================`);
-  console.log(`Acesse localmente em:`);
-  console.log(`  ➔ http://localhost:${PORT}`);
-  console.log(`  ➔ http://127.0.0.1:${PORT}`);
-  console.log(`================================================================`);
-});
+if (require.main === module || !process.env.VERCEL) {
+  server.listen(PORT, '0.0.0.0', () => {
+    console.log(`================================================================`);
+    console.log(`🚀 ARQVERTICE STUDIO — SERVIDOR LOCAL ATIVO`);
+    console.log(`================================================================`);
+    console.log(`Acesse localmente em:`);
+    console.log(`  ➔ http://localhost:${PORT}`);
+    console.log(`  ➔ http://127.0.0.1:${PORT}`);
+    console.log(`================================================================`);
+  });
+}
+
+module.exports = server;
+
